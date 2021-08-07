@@ -1,13 +1,13 @@
-import React from 'react'
-import { StyleSheet, Text, View } from 'react-native'
+import React from 'react';
+import { StyleSheet, Text, View } from 'react-native';
 
 const ProfileScreen = () => {
     return (
         <View style={styles.screen}>
             <Text>Profile Screen</Text>
         </View>
-    )
-}
+    );
+};
 
 const styles = StyleSheet.create({
     screen: {
@@ -15,7 +15,7 @@ const styles = StyleSheet.create({
         justifyContent: 'center',
         alignItems: 'center'
     }
-})
+});
 
-export default ProfileScreen
+export default ProfileScreen;
 
