@@ -1,22 +1,12 @@
 import React from 'react';
-
 import {
   SafeAreaView,
-  ScrollView,
   StatusBar,
   StyleSheet,
   Text,
   useColorScheme,
-  View,
 } from 'react-native';
-
-import {
-  Colors,
-  DebugInstructions,
-  Header,
-  LearnMoreLinks,
-  ReloadInstructions,
-} from 'react-native/Libraries/NewAppScreen';
+import { Colors } from 'react-native/Libraries/NewAppScreen';
 
 const App = () => {
   const isDarkMode = useColorScheme() === 'dark';
@@ -25,7 +15,7 @@ const App = () => {
     <SafeAreaView
       style={[
         styles.screen,
-        {backgroundColor: isDarkMode ? Colors.darker : Colors.lighter},
+        { backgroundColor: isDarkMode ? Colors.darker : Colors.lighter },
       ]}>
       <StatusBar barStyle={isDarkMode ? 'light-content' : 'dark-content'} />
 
@@ -37,23 +27,6 @@ const App = () => {
 const styles = StyleSheet.create({
   screen: {
     flex: 1,
-  },
-
-  sectionContainer: {
-    marginTop: 32,
-    paddingHorizontal: 24,
-  },
-  sectionTitle: {
-    fontSize: 24,
-    fontWeight: '600',
-  },
-  sectionDescription: {
-    marginTop: 8,
-    fontSize: 18,
-    fontWeight: '400',
-  },
-  highlight: {
-    fontWeight: '700',
   },
 });
 
