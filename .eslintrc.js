@@ -2,8 +2,9 @@ module.exports = {
   parser: "babel-eslint",
   root: true,
   extends: '@react-native-community',
-  plugins: ['10x'],
+  plugins: ['10x', "prettier"],
   rules: {
+    "semi": ["error", "always"],
     '10x/auto-import': [
       'error',
       {
@@ -14,6 +15,14 @@ module.exports = {
           useCallback: "import {useCallback} from 'react'",
         },
       },
-    ],
+    ]
+  },
+  settings: {
+    'import/resolver': {
+      node: {
+        extensions: ['.js', '.jsx'],
+        paths: ['.'],
+      },
+    },
   },
 };
