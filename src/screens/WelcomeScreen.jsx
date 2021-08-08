@@ -1,16 +1,17 @@
 import React from "react";
 import { StyleSheet, Text, View } from "react-native";
+
 import AppButton from "../components/AppButton";
 
-const WelcomeScreen = () => {
+const WelcomeScreen = ({ navigation }) => {
   return (
     <View style={styles.screen}>
       <View style={styles.buttonContainer}>
-        <AppButton title='Login' onPress={() => console.log("login")} />
+        <AppButton title='Login' onPress={() => navigation.navigate("Login")} />
         <AppButton
           title='Create Account'
           color='blueLight'
-          onPress={() => console.log("create account")}
+          onPress={() => navigation.navigate("Register")}
         />
       </View>
     </View>
