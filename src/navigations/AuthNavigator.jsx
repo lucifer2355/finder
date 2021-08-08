@@ -33,7 +33,7 @@ const AuthNavigator = () => (
         name='Register'
         component={RegistrationScreen}
         options={{
-          headerTitle: "Create Account",
+          headerTitle: "Create An Account",
           headerBackTitleVisible: false,
         }}
       />
