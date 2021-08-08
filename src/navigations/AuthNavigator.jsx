@@ -32,7 +32,10 @@ const AuthNavigator = () => (
       <Stack.Screen
         name='Register'
         component={RegistrationScreen}
-        options={{ headerBackTitleVisible: false }}
+        options={{
+          headerTitle: "Create Account",
+          headerBackTitleVisible: false,
+        }}
       />
     </Stack.Navigator>
   </NavigationContainer>

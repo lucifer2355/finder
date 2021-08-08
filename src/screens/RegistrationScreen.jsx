@@ -1,13 +1,7 @@
-import React, { useLayoutEffect } from "react";
+import React from "react";
 import { StyleSheet, Text, View } from "react-native";
 
 const RegistrationScreen = ({ navigation }) => {
-  useLayoutEffect(() => {
-    navigation.setOptions({
-      title: "Create Account",
-    });
-  }, []);
-
   return (
     <View style={styles.screen}>
       <Text>Registration Screen</Text>
