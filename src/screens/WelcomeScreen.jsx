@@ -1,11 +1,18 @@
 import React from "react";
-import { StyleSheet, Text, View } from "react-native";
+import { StyleSheet, Text, View, ImageBackground } from "react-native";
 
+import { colors } from "../config/colors";
+import { hp } from "../config/HeightWidth";
 import AppButton from "../components/AppButton";
 
 const WelcomeScreen = ({ navigation }) => {
   return (
-    <View style={styles.screen}>
+    <ImageBackground
+      source={require("../../assets/images/welcome.jpeg")}
+      blurRadius={7}
+      style={styles.screen}
+    >
+      <Text style={styles.text}>Meet New People</Text>
       <View style={styles.buttonContainer}>
         <AppButton title='Login' onPress={() => navigation.navigate("Login")} />
         <AppButton
@@ -14,7 +21,7 @@ const WelcomeScreen = ({ navigation }) => {
           onPress={() => navigation.navigate("Register")}
         />
       </View>
-    </View>
+    </ImageBackground>
   );
 };
 
@@ -23,6 +30,14 @@ const styles = StyleSheet.create({
     flex: 1,
     justifyContent: "flex-end",
     alignItems: "center",
+  },
+
+  text: {
+    position: "absolute",
+    top: hp("25%"),
+    color: colors.black,
+    fontSize: 26,
+    fontWeight: "bold",
   },
 
   buttonContainer: {

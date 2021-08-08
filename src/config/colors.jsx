@@ -5,4 +5,5 @@ export const colors = Object.freeze({
   white: "#FFFFFF",
   blue: "#6989FF",
   blueLight: "#1CB1E9",
+  black: "#000",
 });
