@@ -1,30 +1,10 @@
-import React from 'react';
-import {
-  SafeAreaView,
-  StatusBar,
-  StyleSheet,
-  Text,
-  useColorScheme,
-} from 'react-native';
-import { Colors } from 'react-native/Libraries/NewAppScreen';
+import React from "react";
+import { StyleSheet } from "react-native";
 
-import HomeScreen from './src/screens/HomeScreen';
-
+import AppNavigator from "./src/navigations/AppNavigator";
 
 const App = () => {
-  const isDarkMode = useColorScheme() === 'dark';
-
-  return (
-    <SafeAreaView
-      style={[
-        styles.screen,
-        { backgroundColor: isDarkMode ? Colors.darker : Colors.lighter },
-      ]}>
-      <StatusBar barStyle={isDarkMode ? 'light-content' : 'dark-content'} />
-
-      <HomeScreen />
-    </SafeAreaView>
-  );
+  return <AppNavigator />;
 };
 
 const styles = StyleSheet.create({
