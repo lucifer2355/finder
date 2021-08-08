@@ -1,14 +1,22 @@
-import React from 'react';
-import {createNativeStackNavigator} from '@react-navigation/native-stack'
+import React from "react";
+import { createNativeStackNavigator } from "@react-navigation/native-stack";
 
-import HomeScreen from '../screens/HomeScreen';
+import { colors } from "../config/colors";
+import HomeScreen from "../screens/HomeScreen";
 
 const Stack = createNativeStackNavigator();
 
 const HomeNavigator = () => (
-    <Stack.Navigator>
-        <Stack.Screen name='HomeNavigator' component={HomeScreen} />
-    </Stack.Navigator>
+  <Stack.Navigator
+    screenOptions={{
+      headerStyle: {
+        backgroundColor: colors.primary,
+      },
+      headerTintColor: colors.white,
+    }}
+  >
+    <Stack.Screen name='HomeNavigator' component={HomeScreen} />
+  </Stack.Navigator>
 );
 
-export default HomeNavigator
+export default HomeNavigator;
