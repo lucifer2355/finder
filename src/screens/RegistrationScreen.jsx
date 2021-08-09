@@ -6,27 +6,26 @@ import RadioForm, {
   RadioButtonLabel,
 } from "react-native-simple-radio-button";
 import { KeyboardAwareScrollView } from "react-native-keyboard-aware-scroll-view";
-
 import * as Yup from "yup";
 
 import { colors } from "../config/colors";
-import Icons from "../config/Icons";
+import { wp } from "../config/HeightWidth";
 import {
   AppForm,
   AppFormField,
   ErrorMessage,
   SubmitButton,
 } from "../components/form";
-import { wp } from "../config/HeightWidth";
+import Icons from "../config/Icons";
+import db from "../firebase";
 
 const validationSchema = Yup.object().shape({
   username: Yup.string().required().label("Username"),
   fullName: Yup.string().required().label("Full Name"),
   age: Yup.string().required().label("Age"),
-  countryFrom: Yup.string().required().label("Country"),
-  stateFrom: Yup.string().required().label("State"),
-  cityFrom: Yup.string().required().label("City"),
-  gender: Yup.string().required().label("Gender"),
+  country: Yup.string().required().label("Country"),
+  state: Yup.string().required().label("State"),
+  city: Yup.string().required().label("City"),
   password: Yup.string().required().label("Password"),
 });
 
@@ -38,8 +37,24 @@ const RegistrationScreen = ({ navigation }) => {
   const [gender, setGender] = useState("male");
   const [isLoading, setIsLoading] = useState(false);
 
-  const handleSubmit = () => {
-    console.log("Create user");
+  const handleSubmit = async (userInfo, { resetForm }) => {
+    try {
+      setIsLoading(true);
+      await db.collection("users").add({
+        username: userInfo.username,
+        fullName: userInfo.fullName,
+        age: userInfo.age,
+        country: userInfo.country,
+        state: userInfo.state,
+        city: userInfo.city,
+        gender,
+        password: userInfo.password,
+      });
+      setIsLoading(false);
+      resetForm();
+    } catch (error) {
+      console.log("Error in creating new user", error);
+    }
   };
 
   return (
@@ -54,21 +69,24 @@ const RegistrationScreen = ({ navigation }) => {
             username: "",
             fullName: "",
             age: "",
-            countryFrom: "",
-            stateFrom: "",
-            cityFrom: "",
-            gender: "",
+            country: "",
+            state: "",
+            city: "",
             password: "",
           }}
-          validationSchema={validationSchema}
           onSubmit={handleSubmit}
+          validationSchema={validationSchema}
         >
           <AppFormField
+            autoCapitalize='none'
+            autoCorrect={false}
             name='username'
             placeholder='Username'
             icon={Icons.fontAwesomeIcons("user")}
           />
           <AppFormField
+            autoCapitalize='words'
+            autoCorrect={false}
             name='fullName'
             placeholder='Full Name'
             icon={Icons.fontAwesomeIcons("vcard")}
@@ -76,26 +94,35 @@ const RegistrationScreen = ({ navigation }) => {
           <AppFormField
             name='age'
             placeholder='Age'
+            keyboardType='number-pad'
             icon={Icons.materialCommunityIcons("walk")}
           />
           <AppFormField
-            name='countryFrom'
+            autoCapitalize='words'
+            autoCorrect={false}
+            name='country'
             placeholder='Which country you are from?'
             icon={Icons.materialCommunityIcons("flag")}
           />
           <AppFormField
-            name='stateFrom'
+            autoCapitalize='words'
+            autoCorrect={false}
+            name='state'
             placeholder='Which state you are from?'
             icon={Icons.materialCommunityIcons("flag")}
           />
           <AppFormField
-            name='cityFrom'
+            autoCapitalize='words'
+            autoCorrect={false}
+            name='city'
             placeholder='Which city you are from?'
             icon={Icons.materialCommunityIcons("city")}
           />
           <AppFormField
             name='password'
             placeholder='Password'
+            secureTextEntry
+            textContentType='password'
             icon={Icons.fontAwesomeIcons("lock")}
           />
 
