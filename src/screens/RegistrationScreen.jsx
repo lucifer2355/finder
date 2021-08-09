@@ -1,10 +1,12 @@
 import React, { useState } from "react";
-import { StyleSheet, Text, View, ImageBackground } from "react-native";
+import { StyleSheet, View, ImageBackground } from "react-native";
 import RadioForm, {
   RadioButton,
   RadioButtonInput,
   RadioButtonLabel,
 } from "react-native-simple-radio-button";
+import { KeyboardAwareScrollView } from "react-native-keyboard-aware-scroll-view";
+
 import * as Yup from "yup";
 
 import { colors } from "../config/colors";
@@ -43,86 +45,88 @@ const RegistrationScreen = ({ navigation }) => {
   return (
     <ImageBackground
       source={require("../../assets/images/street.jpeg")}
-      blurRadius={6}
+      blurRadius={8}
       style={styles.screen}
     >
-      <AppForm
-        initialValue={{
-          username: "",
-          fullName: "",
-          age: "",
-          countryFrom: "",
-          stateFrom: "",
-          cityFrom: "",
-          gender: "",
-          password: "",
-        }}
-        validationSchema={validationSchema}
-        onSubmit={handleSubmit}
-      >
-        <AppFormField
-          name='username'
-          placeholder='Username'
-          icon={Icons.fontAwesomeIcons("user")}
-        />
-        <AppFormField
-          name='fullName'
-          placeholder='Full Name'
-          icon={Icons.fontAwesomeIcons("vcard")}
-        />
-        <AppFormField
-          name='age'
-          placeholder='Age'
-          icon={Icons.materialCommunityIcons("walk")}
-        />
-        <AppFormField
-          name='countryFrom'
-          placeholder='Which country you are from?'
-          icon={Icons.materialCommunityIcons("flag")}
-        />
-        <AppFormField
-          name='stateFrom'
-          placeholder='Which state you are from?'
-          icon={Icons.materialCommunityIcons("flag")}
-        />
-        <AppFormField
-          name='cityFrom'
-          placeholder='Which city you are from?'
-          icon={Icons.materialCommunityIcons("city")}
-        />
-        <AppFormField
-          name='password'
-          placeholder='Password'
-          icon={Icons.fontAwesomeIcons("lock")}
-        />
+      <KeyboardAwareScrollView>
+        <AppForm
+          initialValue={{
+            username: "",
+            fullName: "",
+            age: "",
+            countryFrom: "",
+            stateFrom: "",
+            cityFrom: "",
+            gender: "",
+            password: "",
+          }}
+          validationSchema={validationSchema}
+          onSubmit={handleSubmit}
+        >
+          <AppFormField
+            name='username'
+            placeholder='Username'
+            icon={Icons.fontAwesomeIcons("user")}
+          />
+          <AppFormField
+            name='fullName'
+            placeholder='Full Name'
+            icon={Icons.fontAwesomeIcons("vcard")}
+          />
+          <AppFormField
+            name='age'
+            placeholder='Age'
+            icon={Icons.materialCommunityIcons("walk")}
+          />
+          <AppFormField
+            name='countryFrom'
+            placeholder='Which country you are from?'
+            icon={Icons.materialCommunityIcons("flag")}
+          />
+          <AppFormField
+            name='stateFrom'
+            placeholder='Which state you are from?'
+            icon={Icons.materialCommunityIcons("flag")}
+          />
+          <AppFormField
+            name='cityFrom'
+            placeholder='Which city you are from?'
+            icon={Icons.materialCommunityIcons("city")}
+          />
+          <AppFormField
+            name='password'
+            placeholder='Password'
+            icon={Icons.fontAwesomeIcons("lock")}
+          />
 
-        <View style={styles.radioButtonContainer}>
-          <RadioForm formHorizontal={true} animation={true}>
-            {radio_props.map((obj, i) => (
-              <View style={styles.radioButton} key={obj.value}>
-                <RadioButton labelHorizontal={true} key={i}>
-                  <RadioButtonInput
-                    obj={obj}
-                    index={i}
-                    onPress={() => setGender(obj.value)}
-                    isSelected={gender === obj.value}
-                    buttonInnerColor={colors.primary}
-                    buttonOuterColor={colors.primary}
-                  />
-                  <RadioButtonLabel
-                    obj={obj}
-                    index={i}
-                    labelHorizontal={true}
-                    onPress={() => setGender(obj.value)}
-                    labelStyle={styles.radioButtonLabelStyle}
-                  />
-                </RadioButton>
-              </View>
-            ))}
-          </RadioForm>
-        </View>
-        <SubmitButton title='Create Account' isLoading={isLoading} />
-      </AppForm>
+          <View style={styles.radioButtonContainer}>
+            <RadioForm formHorizontal={true} animation={true}>
+              {radio_props.map((obj, i) => (
+                <View style={styles.radioButton} key={obj.value}>
+                  <RadioButton labelHorizontal={true} key={i}>
+                    <RadioButtonInput
+                      obj={obj}
+                      index={i}
+                      onPress={() => setGender(obj.value)}
+                      isSelected={gender === obj.value}
+                      buttonInnerColor={colors.primary}
+                      buttonOuterColor={colors.primary}
+                    />
+                    <RadioButtonLabel
+                      obj={obj}
+                      index={i}
+                      labelHorizontal={true}
+                      onPress={() => setGender(obj.value)}
+                      labelStyle={styles.radioButtonLabelStyle}
+                    />
+                  </RadioButton>
+                </View>
+              ))}
+            </RadioForm>
+          </View>
+          <SubmitButton title='Create Account' isLoading={isLoading} />
+        </AppForm>
+      </KeyboardAwareScrollView>
     </ImageBackground>
   );
 };
