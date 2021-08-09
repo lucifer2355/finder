@@ -1,13 +1,34 @@
 import React from "react";
-import { StyleSheet, Text, TouchableOpacity } from "react-native";
+import {
+  StyleSheet,
+  Text,
+  TouchableOpacity,
+  ActivityIndicator,
+} from "react-native";
 
 import { colors } from "../config/colors";
 
-const AppButton = ({ title, color = "primary", onPress, style }) => {
+const AppButton = ({
+  title,
+  color = "primary",
+  onPress,
+  style,
+  isLoading = false,
+}) => {
+  if (isLoading)
+    return (
+      <ActivityIndicator
+        size='large'
+        color={colors.primary}
+        style={{ marginTop: 5 }}
+      />
+    );
+
   return (
     <TouchableOpacity
       style={[styles.button, { backgroundColor: colors[color], style }]}
       onPress={onPress}
+      disabled={isLoading}
     >
       <Text style={styles.buttonTitle}>{title}</Text>
     </TouchableOpacity>
