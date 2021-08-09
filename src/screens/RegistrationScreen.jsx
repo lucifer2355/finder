@@ -15,6 +15,7 @@ import {
   ErrorMessage,
   SubmitButton,
 } from "../components/form";
+import { wp } from "../config/HeightWidth";
 
 const validationSchema = Yup.object().shape({
   username: Yup.string().required().label("Username"),
@@ -28,11 +29,12 @@ const validationSchema = Yup.object().shape({
 });
 
 const RegistrationScreen = ({ navigation }) => {
-  var radio_props = [
+  const radio_props = [
     { label: "Male", value: "male" },
     { label: "Female", value: "female" },
   ];
   const [gender, setGender] = useState("male");
+  const [isLoading, setIsLoading] = useState(false);
 
   const handleSubmit = () => {
     console.log("Create user");
@@ -41,7 +43,7 @@ const RegistrationScreen = ({ navigation }) => {
   return (
     <ImageBackground
       source={require("../../assets/images/street.jpeg")}
-      blurRadius={4}
+      blurRadius={6}
       style={styles.screen}
     >
       <AppForm
@@ -88,6 +90,11 @@ const RegistrationScreen = ({ navigation }) => {
           placeholder='Which city you are from?'
           icon={Icons.materialCommunityIcons("city")}
         />
+        <AppFormField
+          name='password'
+          placeholder='Password'
+          icon={Icons.fontAwesomeIcons("lock")}
+        />
 
         <View style={styles.radioButtonContainer}>
           <RadioForm formHorizontal={true} animation={true}>
@@ -108,13 +115,13 @@ const RegistrationScreen = ({ navigation }) => {
                     labelHorizontal={true}
                     onPress={() => setGender(obj.value)}
                     labelStyle={styles.radioButtonLabelStyle}
-                    labelWrapStyle={{}}
                   />
                 </RadioButton>
               </View>
             ))}
           </RadioForm>
         </View>
+        <SubmitButton title='Create Account' isLoading={isLoading} />
       </AppForm>
     </ImageBackground>
   );
@@ -123,16 +130,13 @@ const RegistrationScreen = ({ navigation }) => {
 const styles = StyleSheet.create({
   screen: {
     flex: 1,
-  },
-
-  icon: {
-    marginRight: 15,
+    paddingHorizontal: 15,
+    paddingTop: wp("15%"),
   },
 
   radioButtonContainer: {
-    flex: 1,
     alignItems: "center",
-    marginTop: 5,
+    marginVertical: 5,
   },
 
   radioButton: {
