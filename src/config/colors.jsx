@@ -6,4 +6,5 @@ export const colors = Object.freeze({
   blue: "#6989FF",
   blueLight: "#1CB1E9",
   black: "#000",
+  transparentBlack: "rgba(0, 0, 0, 0.4)",
 });
