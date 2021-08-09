@@ -6,8 +6,12 @@ import { colors } from "../config/colors";
 const AppTextInput = ({ icon, width = "100%", ...otherProps }) => {
   return (
     <View style={[styles.container, { width }]}>
-      {icon && icon}
-      <TextInput placeholderTextColor={colors.white} style={styles.textInput} />
+      {icon && <View style={{ marginRight: 15 }}>{icon}</View>}
+      <TextInput
+        placeholderTextColor={colors.white}
+        style={styles.textInput}
+        {...otherProps}
+      />
     </View>
   );
 };
@@ -18,7 +22,7 @@ const styles = StyleSheet.create({
     borderRadius: 25,
     flexDirection: "row",
     padding: 15,
-    marginVertical: 15,
+    marginVertical: 5,
   },
 
   textInput: {
