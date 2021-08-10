@@ -12,11 +12,11 @@ export const login = (username, password) => async (dispatch) => {
       .then((querySnapshot) => {
         querySnapshot.forEach((snapshot) => {
           const data = snapshot.data();
-          const id = snapshot.id();
-
-          console.log(id);
+          const id = snapshot.id;
 
           if (data.username === username && data.password === password) {
+            data.id = id;
+            setItem("userData", data);
             dispatch({ type: LOGIN_COMPLETE, payload: data });
           }
         });

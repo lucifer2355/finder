@@ -1,5 +1,6 @@
-import React, { useState } from "react";
-import { ImageBackground, StyleSheet, Text, View } from "react-native";
+import React from "react";
+import { ImageBackground, StyleSheet, Text } from "react-native";
+import { useDispatch, useSelector } from "react-redux";
 import * as Yup from "yup";
 
 import {
@@ -10,6 +11,7 @@ import {
 } from "../components/form";
 import { wp } from "../config/HeightWidth";
 import Icons from "../config/Icons";
+import { login } from "../store/auth/authAction";
 
 const validationSchema = Yup.object().shape({
   username: Yup.string().required().label("Username"),
@@ -17,10 +19,12 @@ const validationSchema = Yup.object().shape({
 });
 
 const LoginScreen = () => {
-  const [isLoading, setIsLoading] = useState(false);
-  const [isLoginFail, setIsLoginFail] = useState(false);
+  const dispatch = useDispatch();
+  const { isLoading } = useSelector((state) => state.authReducer);
 
-  const handleSubmit = async ({ username, password }) => {};
+  const handleSubmit = async ({ username, password }) => {
+    await dispatch(login(username, password));
+  };
 
   return (
     <ImageBackground
@@ -28,9 +32,6 @@ const LoginScreen = () => {
       blurRadius={7}
       style={styles.screen}
     >
-      {isLoginFail && (
-        <Text style={styles.errorText}>Username & Password not match</Text>
-      )}
       <AppForm
         initialValue={{ username: "", password: "" }}
         onSubmit={handleSubmit}
