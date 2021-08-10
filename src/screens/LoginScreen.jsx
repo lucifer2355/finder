@@ -10,8 +10,6 @@ import {
 } from "../components/form";
 import { wp } from "../config/HeightWidth";
 import Icons from "../config/Icons";
-import db from "../firebase";
-import { setItem } from "../utils/Storage";
 
 const validationSchema = Yup.object().shape({
   username: Yup.string().required().label("Username"),
@@ -22,25 +20,7 @@ const LoginScreen = () => {
   const [isLoading, setIsLoading] = useState(false);
   const [isLoginFail, setIsLoginFail] = useState(false);
 
-  const handleSubmit = async ({ username, password }) => {
-    try {
-      await db
-        .collection("users")
-        .get()
-        .then((querySnapshot) => {
-          querySnapshot.forEach((snapshot) => {
-            const data = snapshot.data();
-
-            if (data.username === username && data.password === password)
-              setItem("userData", data);
-          });
-        });
-
-      setIsLoginFail(true);
-    } catch (error) {
-      console.log("Error in login action", error);
-    }
-  };
+  const handleSubmit = async ({ username, password }) => {};
 
   return (
     <ImageBackground

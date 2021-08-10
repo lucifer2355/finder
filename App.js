@@ -1,9 +1,11 @@
 import React, { useEffect, useState } from "react";
-import { StyleSheet } from "react-native";
+import { Provider } from "react-redux";
+import { useSelector } from "react-redux";
 
+import { getItem, removeItem } from "./src/utils/Storage";
 import AppNavigator from "./src/navigations/AppNavigator";
 import AuthNavigator from "./src/navigations/AuthNavigator";
-import { getItem } from "./src/utils/Storage";
+import { store } from "./src/store/store";
 
 const App = () => {
   const [isUserLogin, setIsUserLogin] = useState(false);
@@ -12,19 +14,19 @@ const App = () => {
     const userData = await getItem("userData");
 
     if (userData) setIsUserLogin(true);
+    else setIsUserLogin(false);
   };
 
   useEffect(() => {
     getUserData();
+    // removeItem("userData");
   }, []);
 
-  return isUserLogin ? <AppNavigator /> : <AuthNavigator />;
+  return (
+    <Provider store={store}>
+      {isUserLogin ? <AppNavigator /> : <AuthNavigator />}
+    </Provider>
+  );
 };
-
-const styles = StyleSheet.create({
-  screen: {
-    flex: 1,
-  },
-});
 
 export default App;

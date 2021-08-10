@@ -1,8 +1,8 @@
 import AsyncStorage from "@react-native-async-storage/async-storage";
 
-const getItem = async (key) => {
+const getItem = (key) => {
   try {
-    return await AsyncStorage.getItem(key);
+    return AsyncStorage.getItem(key);
   } catch (error) {
     console.log("Error in get item", error);
   }

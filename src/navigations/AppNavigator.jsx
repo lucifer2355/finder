@@ -20,39 +20,43 @@ const AppNavigator = () => (
       barStyle={{ backgroundColor: colors.primary }}
     >
       <Tab.Screen
-        name='Home'
+        name='HomeNavigator'
         component={HomeNavigator}
         options={{
           tabBarIcon: ({ color }) => (
             <Icon name='home' color={color} size={26} />
           ),
+          tabBarLabel: "Home",
         }}
       />
       <Tab.Screen
-        name='Search'
+        name='SearchNavigator'
         component={SearchNavigator}
         options={{
           tabBarIcon: ({ color }) => (
             <Ionicons name='search' color={color} size={26} />
           ),
+          tabBarLabel: "Search",
         }}
       />
       <Tab.Screen
-        name='Notification'
+        name='NotificationNavigator'
         component={NotificationNavigator}
         options={{
           tabBarIcon: ({ color }) => (
             <Ionicons name='notifications' color={color} size={26} />
           ),
+          tabBarLabel: "Notification",
         }}
       />
       <Tab.Screen
-        name='Profile'
+        name='ProfileNavigator'
         component={ProfileNavigator}
         options={{
           tabBarIcon: ({ color }) => (
             <Icon name='account' color={color} size={26} />
           ),
+          tabBarLabel: "Profile",
         }}
       />
     </Tab.Navigator>
