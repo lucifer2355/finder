@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { StyleSheet, View, ImageBackground } from "react-native";
 import RadioForm, {
   RadioButton,
@@ -6,6 +6,8 @@ import RadioForm, {
   RadioButtonLabel,
 } from "react-native-simple-radio-button";
 import { KeyboardAwareScrollView } from "react-native-keyboard-aware-scroll-view";
+import GetLocation from "react-native-get-location";
+import { useDispatch } from "react-redux";
 import * as Yup from "yup";
 
 import { colors } from "../config/colors";
@@ -16,8 +18,8 @@ import {
   ErrorMessage,
   SubmitButton,
 } from "../components/form";
+import { register } from "../store/auth/authAction";
 import Icons from "../config/Icons";
-import db from "../firebase";
 
 const validationSchema = Yup.object().shape({
   username: Yup.string().required().label("Username"),
@@ -30,14 +32,39 @@ const validationSchema = Yup.object().shape({
 });
 
 const RegistrationScreen = ({ navigation }) => {
+  const dispatch = useDispatch();
   const radio_props = [
     { label: "Male", value: "male" },
     { label: "Female", value: "female" },
   ];
   const [gender, setGender] = useState("male");
   const [isLoading, setIsLoading] = useState(false);
+  const [userCurrentLocation, setUserCurrentLocation] = useState({
+    latitude: 0,
+    longitude: 0,
+  });
 
-  const handleSubmit = async (userInfo, { resetForm }) => {};
+  const handleSubmit = async (userInfo, { resetForm }) => {
+    await dispatch(register(userInfo, gender, userCurrentLocation));
+    resetForm();
+  };
+
+  useEffect(() => {
+    GetLocation.getCurrentPosition({
+      enableHighAccuracy: false,
+      timeout: 15000,
+    })
+      .then((location) => {
+        setUserCurrentLocation((preState) => {
+          preState.latitude = location.latitude;
+          preState.longitude = location.longitude;
+        });
+      })
+      .catch((error) => {
+        const { code, message } = error;
+        console.warn(code, message);
+      });
+  }, []);
 
   return (
     <ImageBackground

@@ -34,23 +34,25 @@ export const login = (username, password) => async (dispatch) => {
   }
 };
 
-export const register = (userInfo) => async (dispatch) => {
-  dispatch({ type: REGISTRATION_START });
-  try {
-    await db.collection("users").add({
-      username: userInfo.username,
-      fullName: userInfo.fullName,
-      age: userInfo.age,
-      country: userInfo.country,
-      state: userInfo.state,
-      city: userInfo.city,
-      gender,
-      password: userInfo.password,
-    });
+export const register =
+  (userInfo, gender, userCurrentLocation) => async (dispatch) => {
+    dispatch({ type: REGISTRATION_START });
+    try {
+      await db.collection("users").add({
+        username: userInfo.username,
+        fullName: userInfo.fullName,
+        age: userInfo.age,
+        country: userInfo.country,
+        state: userInfo.state,
+        city: userInfo.city,
+        gender,
+        password: userInfo.password,
+        userCurrentLocation,
+      });
 
-    login(userInfo.userInfo, userInfo.password);
-  } catch (error) {
-    dispatch({ type: REGISTRATION_FAILED });
-    console.log("Error in creating new user", error);
-  }
-};
+      login(userInfo.userInfo, userInfo.password);
+    } catch (error) {
+      dispatch({ type: REGISTRATION_FAILED });
+      console.log("Error in creating new user", error);
+    }
+  };
