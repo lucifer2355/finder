@@ -4,9 +4,9 @@ import { Provider } from "react-redux";
 import { useSelector } from "react-redux";
 
 import { getItem, removeItem } from "./src/utils/Storage";
+import { store } from "./src/store/store";
 import AppNavigator from "./src/navigations/AppNavigator";
 import AuthNavigator from "./src/navigations/AuthNavigator";
-import { store } from "./src/store/store";
 
 const AppWrapper = () => {
   return (

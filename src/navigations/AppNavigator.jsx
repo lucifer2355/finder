@@ -13,7 +13,7 @@ const Tab = createMaterialBottomTabNavigator();
 
 const AppNavigator = () => (
   <Tab.Navigator
-    initialRouteName='Home'
+    initialRouteName='HomeNavigator'
     activeColor={colors.white}
     barStyle={{ backgroundColor: colors.primary }}
   >

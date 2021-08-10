@@ -15,7 +15,7 @@ const HomeNavigator = () => (
       headerTintColor: colors.white,
     }}
   >
-    <Stack.Screen name='HomeNavigator' component={HomeScreen} />
+    <Stack.Screen name='Home' component={HomeScreen} />
   </Stack.Navigator>
 );
 
