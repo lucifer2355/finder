@@ -1,6 +1,13 @@
 import db from "../../firebase";
 import { setItem } from "../../utils/Storage";
-import { LOGIN_START, LOGIN_COMPLETE, LOGIN_FAILED } from "./types";
+import {
+  LOGIN_START,
+  LOGIN_COMPLETE,
+  LOGIN_FAILED,
+  REGISTRATION_START,
+  REGISTRATION_COMPLETE,
+  REGISTRATION_FAILED,
+} from "./types";
 
 export const login = (username, password) => async (dispatch) => {
   dispatch({ type: LOGIN_START });
@@ -24,5 +31,26 @@ export const login = (username, password) => async (dispatch) => {
   } catch (error) {
     dispatch({ type: LOGIN_FAILED });
     console.log("Error in login action", error);
+  }
+};
+
+export const register = (userInfo) => async (dispatch) => {
+  dispatch({ type: REGISTRATION_START });
+  try {
+    await db.collection("users").add({
+      username: userInfo.username,
+      fullName: userInfo.fullName,
+      age: userInfo.age,
+      country: userInfo.country,
+      state: userInfo.state,
+      city: userInfo.city,
+      gender,
+      password: userInfo.password,
+    });
+
+    login(userInfo.userInfo, userInfo.password);
+  } catch (error) {
+    dispatch({ type: REGISTRATION_FAILED });
+    console.log("Error in creating new user", error);
   }
 };

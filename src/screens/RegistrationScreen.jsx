@@ -37,25 +37,7 @@ const RegistrationScreen = ({ navigation }) => {
   const [gender, setGender] = useState("male");
   const [isLoading, setIsLoading] = useState(false);
 
-  const handleSubmit = async (userInfo, { resetForm }) => {
-    try {
-      setIsLoading(true);
-      await db.collection("users").add({
-        username: userInfo.username,
-        fullName: userInfo.fullName,
-        age: userInfo.age,
-        country: userInfo.country,
-        state: userInfo.state,
-        city: userInfo.city,
-        gender,
-        password: userInfo.password,
-      });
-      setIsLoading(false);
-      resetForm();
-    } catch (error) {
-      console.log("Error in creating new user", error);
-    }
-  };
+  const handleSubmit = async (userInfo, { resetForm }) => {};
 
   return (
     <ImageBackground

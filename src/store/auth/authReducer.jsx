@@ -1,4 +1,10 @@
-import { LOGIN_START, LOGIN_COMPLETE, LOGIN_FAILED } from "./types";
+import {
+  LOGIN_START,
+  LOGIN_COMPLETE,
+  LOGIN_FAILED,
+  REGISTRATION_START,
+  REGISTRATION_FAILED,
+} from "./types";
 
 const initialState = {
   isLoading: false,
@@ -20,6 +26,18 @@ export const authReducer = (state = initialState, action) => {
       };
 
     case LOGIN_FAILED:
+      return {
+        ...state,
+        isLoading: false,
+      };
+
+    case REGISTRATION_START:
+      return {
+        ...state,
+        isLoading: true,
+      };
+
+    case REGISTRATION_FAILED:
       return {
         ...state,
         isLoading: false,
