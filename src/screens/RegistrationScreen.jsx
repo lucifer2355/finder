@@ -7,7 +7,7 @@ import RadioForm, {
 } from "react-native-simple-radio-button";
 import { KeyboardAwareScrollView } from "react-native-keyboard-aware-scroll-view";
 import GetLocation from "react-native-get-location";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import * as Yup from "yup";
 
 import { colors } from "../config/colors";
@@ -31,14 +31,14 @@ const validationSchema = Yup.object().shape({
   password: Yup.string().required().label("Password"),
 });
 
-const RegistrationScreen = ({ navigation }) => {
+const RegistrationScreen = () => {
   const dispatch = useDispatch();
+  const { isLoading } = useSelector((state) => state.authReducer);
   const radio_props = [
     { label: "Male", value: "male" },
     { label: "Female", value: "female" },
   ];
   const [gender, setGender] = useState("male");
-  const [isLoading, setIsLoading] = useState(false);
   const [userCurrentLocation, setUserCurrentLocation] = useState({
     latitude: 0,
     longitude: 0,
@@ -55,10 +55,10 @@ const RegistrationScreen = ({ navigation }) => {
       timeout: 15000,
     })
       .then((location) => {
-        setUserCurrentLocation((preState) => {
-          preState.latitude = location.latitude;
-          preState.longitude = location.longitude;
-        });
+        setUserCurrentLocation(() => ({
+          latitude: location.latitude,
+          longitude: location.longitude,
+        }));
       })
       .catch((error) => {
         const { code, message } = error;

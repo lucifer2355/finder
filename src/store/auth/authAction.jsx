@@ -49,8 +49,9 @@ export const register =
         password: userInfo.password,
         userCurrentLocation,
       });
+      dispatch({ type: REGISTRATION_COMPLETE });
 
-      login(userInfo.userInfo, userInfo.password);
+      dispatch(login(userInfo.username, userInfo.password));
     } catch (error) {
       dispatch({ type: REGISTRATION_FAILED });
       console.log("Error in creating new user", error);

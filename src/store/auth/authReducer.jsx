@@ -3,6 +3,7 @@ import {
   LOGIN_COMPLETE,
   LOGIN_FAILED,
   REGISTRATION_START,
+  REGISTRATION_COMPLETE,
   REGISTRATION_FAILED,
 } from "./types";
 
@@ -35,6 +36,12 @@ export const authReducer = (state = initialState, action) => {
       return {
         ...state,
         isLoading: true,
+      };
+
+    case REGISTRATION_COMPLETE:
+      return {
+        ...state,
+        isLoading: false,
       };
 
     case REGISTRATION_FAILED:
