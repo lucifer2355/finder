@@ -14,22 +14,22 @@ const ProfileScreen = () => {
     {
       id: 1,
       label: userData.gender,
-      icon: Icons.fontAwesomeIcons("user"),
+      icon: Icons.fontAwesomeIcons("user", 20),
     },
     {
       id: 2,
-      label: userData.age,
-      icon: Icons.materialCommunityIcons("walk"),
+      label: `${userData.age} Years Old`,
+      icon: Icons.materialCommunityIcons("walk", 20),
     },
     {
       id: 3,
       label: `${userData.city}, ${userData.state}, ${userData.country}`,
-      icon: Icons.materialCommunityIcons("city"),
+      icon: Icons.materialCommunityIcons("city", 20),
     },
     {
       id: 4,
       label: `Current Location: ${userData?.userCurrentLocation?.latitude}, ${userData?.userCurrentLocation?.longitude}`,
-      icon: Icons.ioniconsIcons("location"),
+      icon: Icons.ioniconsIcons("location", 20),
     },
   ]);
 
@@ -60,6 +60,14 @@ const ProfileScreen = () => {
         )}
         contentContainerStyle={styles.listingView}
       />
+
+      <View style={{ paddingBottom: hp("20%") }}>
+        <ListingItem
+          iconComponent={Icons.materialCommunityIcons("logout", 20)}
+          backgroundColor={colors.pink}
+          label='Logout'
+        />
+      </View>
     </View>
   );
 };
