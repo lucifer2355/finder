@@ -3,11 +3,10 @@ import { StyleSheet, Text, View, FlatList } from "react-native";
 import { useSelector } from "react-redux";
 import ProfilePicture from "react-native-profile-picture";
 
-import { getItem } from "../utils/Storage";
+import { colors } from "../config/colors";
 import { hp } from "../config/HeightWidth";
 import Icons from "../config/Icons";
 import ListingItem from "../components/ListingItem";
-import { colors } from "../config/colors";
 
 const ProfileScreen = () => {
   const { userData } = useSelector((state) => state.userReducer);
@@ -20,17 +19,17 @@ const ProfileScreen = () => {
     {
       id: 2,
       label: userData.age,
-      icon: Icons.fontAwesomeIcons("user"),
+      icon: Icons.materialCommunityIcons("walk"),
     },
     {
       id: 3,
       label: `${userData.city}, ${userData.state}, ${userData.country}`,
-      icon: Icons.fontAwesomeIcons("user"),
+      icon: Icons.materialCommunityIcons("city"),
     },
     {
       id: 4,
       label: `Current Location: ${userData?.userCurrentLocation?.latitude}, ${userData?.userCurrentLocation?.longitude}`,
-      icon: Icons.fontAwesomeIcons("user"),
+      icon: Icons.ioniconsIcons("location"),
     },
   ]);
 
@@ -59,6 +58,7 @@ const ProfileScreen = () => {
             label={item.label}
           />
         )}
+        contentContainerStyle={styles.listingView}
       />
     </View>
   );
@@ -78,6 +78,10 @@ const styles = StyleSheet.create({
     fontSize: 18,
     marginTop: 4,
     fontWeight: "bold",
+  },
+
+  listingView: {
+    marginTop: hp("5%"),
   },
 });
 
