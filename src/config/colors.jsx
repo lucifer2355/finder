@@ -5,7 +5,7 @@ export const colors = Object.freeze({
   white: "#FFFFFF",
   blue: "#6989FF",
   blueLight: "#1CB1E9",
+  pink: "#fc5c65",
   black: "#000",
   transparentBlack: "rgba(0, 0, 0, 0.6)",
-  backgroundColor: "#1a1a1a",
 });
