@@ -1,7 +1,8 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, useLayoutEffect } from "react";
 import { StyleSheet, Text, View, FlatList } from "react-native";
 import { useSelector, useDispatch } from "react-redux";
 import ProfilePicture from "react-native-profile-picture";
+import MaterialCommunityIcons from "react-native-vector-icons/MaterialCommunityIcons";
 
 import { colors } from "../config/colors";
 import { hp } from "../config/HeightWidth";
@@ -9,7 +10,7 @@ import { logout } from "../store/auth/authAction";
 import Icons from "../config/Icons";
 import ListingItem from "../components/ListingItem";
 
-const ProfileScreen = () => {
+const ProfileScreen = ({ navigation }) => {
   const dispatch = useDispatch();
   const { userData } = useSelector((state) => state.authReducer);
   const [itemList, setItemList] = useState([
@@ -39,6 +40,19 @@ const ProfileScreen = () => {
       icon: Icons.ioniconsIcons("location", 20),
     },
   ]);
+
+  useLayoutEffect(() => {
+    navigation.setOptions({
+      headerRight: () => (
+        <MaterialCommunityIcons
+          name='account-edit'
+          size={26}
+          color={colors.white}
+          onPress={() => console.log("edit")}
+        />
+      ),
+    });
+  }, []);
 
   useEffect(() => {}, []);
 
