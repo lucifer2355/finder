@@ -1,6 +1,5 @@
 import React from "react";
 import { StyleSheet, Text, View, Image } from "react-native";
-import { hp, wp } from "../config/HeightWidth";
 import { colors } from "../config/colors";
 
 const MessageCard = () => {
