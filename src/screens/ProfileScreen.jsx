@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { StyleSheet, Text, View, FlatList } from "react-native";
+import { useSelector } from "react-redux";
 import ProfilePicture from "react-native-profile-picture";
 
 import { getItem } from "../utils/Storage";
@@ -9,7 +10,7 @@ import ListingItem from "../components/ListingItem";
 import { colors } from "../config/colors";
 
 const ProfileScreen = () => {
-  const [userData, setUserData] = useState({});
+  const { userData } = useSelector((state) => state.userReducer);
   const [itemList, setItemList] = useState([
     {
       id: 1,
@@ -33,14 +34,7 @@ const ProfileScreen = () => {
     },
   ]);
 
-  const getUserData = async () => {
-    const data = await getItem("userData");
-    setUserData(JSON.parse(data));
-  };
-
-  useEffect(() => {
-    getUserData();
-  }, []);
+  useEffect(() => {}, []);
 
   return (
     <View style={styles.screen}>
