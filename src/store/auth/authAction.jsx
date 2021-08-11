@@ -1,5 +1,5 @@
 import db from "../../firebase";
-import { setItem } from "../../utils/Storage";
+import { removeItem, setItem } from "../../utils/Storage";
 import {
   LOGIN_START,
   LOGIN_COMPLETE,
@@ -7,6 +7,8 @@ import {
   REGISTRATION_START,
   REGISTRATION_COMPLETE,
   REGISTRATION_FAILED,
+  STORE_USER_DATA,
+  LOGOUT,
 } from "./types";
 
 export const login = (username, password) => async (dispatch) => {
@@ -57,3 +59,12 @@ export const register =
       console.log("Error in creating new user", error);
     }
   };
+
+export const storeUserData = (userData) => async (dispatch) => {
+  dispatch({ type: STORE_USER_DATA, payload: JSON.parse(userData) });
+};
+
+export const logout = () => async (dispatch) => {
+  await removeItem("userData");
+  dispatch({ type: LOGOUT });
+};

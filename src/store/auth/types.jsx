@@ -4,3 +4,5 @@ export const REGISTRATION_FAILED = "REGISTRATION_FAILED";
 export const LOGIN_START = "LOGIN_START";
 export const LOGIN_COMPLETE = "LOGIN_COMPLETE";
 export const LOGIN_FAILED = "LOGIN_FAILED";
+export const STORE_USER_DATA = "STORE_USER_DATA";
+export const LOGOUT = "LOGOUT";

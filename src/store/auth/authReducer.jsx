@@ -5,6 +5,8 @@ import {
   REGISTRATION_START,
   REGISTRATION_COMPLETE,
   REGISTRATION_FAILED,
+  STORE_USER_DATA,
+  LOGOUT,
 } from "./types";
 
 const initialState = {
@@ -32,6 +34,12 @@ export const authReducer = (state = initialState, action) => {
         isLoading: false,
       };
 
+    case STORE_USER_DATA:
+      return {
+        ...state,
+        userData: action.payload,
+      };
+
     case REGISTRATION_START:
       return {
         ...state,
@@ -48,6 +56,12 @@ export const authReducer = (state = initialState, action) => {
       return {
         ...state,
         isLoading: false,
+      };
+
+    case LOGOUT:
+      return {
+        ...state,
+        userData: null,
       };
 
     default:

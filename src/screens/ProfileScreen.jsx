@@ -1,20 +1,27 @@
 import React, { useEffect, useState } from "react";
 import { StyleSheet, Text, View, FlatList } from "react-native";
-import { useSelector } from "react-redux";
+import { useSelector, useDispatch } from "react-redux";
 import ProfilePicture from "react-native-profile-picture";
 
 import { colors } from "../config/colors";
 import { hp } from "../config/HeightWidth";
+import { logout } from "../store/auth/authAction";
 import Icons from "../config/Icons";
 import ListingItem from "../components/ListingItem";
 
 const ProfileScreen = () => {
-  const { userData } = useSelector((state) => state.userReducer);
+  const dispatch = useDispatch();
+  const { userData } = useSelector((state) => state.authReducer);
   const [itemList, setItemList] = useState([
+    {
+      id: 5,
+      label: userData.username,
+      icon: Icons.fontAwesomeIcons("user", 20),
+    },
     {
       id: 1,
       label: userData.gender,
-      icon: Icons.fontAwesomeIcons("user", 20),
+      icon: Icons.materialCommunityIcons("gender-male-female", 20),
     },
     {
       id: 2,
@@ -61,11 +68,12 @@ const ProfileScreen = () => {
         contentContainerStyle={styles.listingView}
       />
 
-      <View style={{ paddingBottom: hp("20%") }}>
+      <View style={{ paddingBottom: hp("1%") }}>
         <ListingItem
+          label='Logout'
           iconComponent={Icons.materialCommunityIcons("logout", 20)}
           backgroundColor={colors.pink}
-          label='Logout'
+          onPress={() => dispatch(logout())}
         />
       </View>
     </View>
