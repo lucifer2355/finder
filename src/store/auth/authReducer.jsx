@@ -6,6 +6,9 @@ import {
   REGISTRATION_COMPLETE,
   REGISTRATION_FAILED,
   STORE_USER_DATA,
+  UPDATE_USER_DATA_START,
+  UPDATE_USER_DATA_COMPLETE,
+  UPDATE_USER_DATA_FAILED,
   LOGOUT,
 } from "./types";
 
@@ -53,6 +56,24 @@ export const authReducer = (state = initialState, action) => {
       };
 
     case REGISTRATION_FAILED:
+      return {
+        ...state,
+        isLoading: false,
+      };
+
+    case UPDATE_USER_DATA_START:
+      return {
+        ...state,
+        isLoading: true,
+      };
+
+    case UPDATE_USER_DATA_COMPLETE:
+      return {
+        isLoading: false,
+        userData: action.payload,
+      };
+
+    case UPDATE_USER_DATA_FAILED:
       return {
         ...state,
         isLoading: false,

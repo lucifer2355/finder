@@ -20,7 +20,7 @@ import { updateUserData } from "../store/auth/authAction";
 
 const EditScreen = () => {
   const dispatch = useDispatch();
-  const { userData } = useSelector((state) => state.authReducer);
+  const { userData, isLoading } = useSelector((state) => state.authReducer);
   const [imageURL, setImageURL] = useState(null);
   const [currentLocation, setCurrentLocation] = useState(null);
 
@@ -52,9 +52,11 @@ const EditScreen = () => {
   };
 
   const handleSubmit = async (data) => {
+    data.id = userData.id;
     data.userCurrentLocation = currentLocation
       ? currentLocation
       : userData.userCurrentLocation;
+    data.gender = userData.gender;
 
     await dispatch(updateUserData(data));
   };
@@ -124,7 +126,7 @@ const EditScreen = () => {
           secureTextEntry
           icon={Icons.materialCommunityIcons("lock")}
         />
-        <SubmitButton title='Save' />
+        <SubmitButton title='Save' isLoading={isLoading} />
       </AppForm>
 
       {!currentLocation && (
