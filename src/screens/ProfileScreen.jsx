@@ -20,11 +20,6 @@ const ProfileScreen = ({ navigation }) => {
       icon: Icons.fontAwesomeIcons("user", 20),
     },
     {
-      id: 1,
-      label: userData.gender,
-      icon: Icons.materialCommunityIcons("gender-male-female", 20),
-    },
-    {
       id: 2,
       label: `${userData.age} Years Old`,
       icon: Icons.materialCommunityIcons("walk", 20),

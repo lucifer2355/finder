@@ -39,7 +39,6 @@ const styles = StyleSheet.create({
   label: {
     fontWeight: "500",
     fontSize: 14,
-    textTransform: "capitalize",
   },
 });
 
