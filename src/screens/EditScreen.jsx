@@ -8,6 +8,7 @@ import {
   ScrollView,
 } from "react-native";
 import { useSelector, useDispatch } from "react-redux";
+import { KeyboardAwareScrollView } from "react-native-keyboard-aware-scroll-view";
 import ImagePicker from "react-native-image-crop-picker";
 import GetLocation from "react-native-get-location";
 
@@ -63,71 +64,75 @@ const EditScreen = () => {
 
   return (
     <ScrollView style={styles.screen}>
-      <TouchableOpacity onPress={imagePicker} style={styles.selectImage}>
-        {!imageURL && Icons.fontAwesomeIcons("camera", 26)}
-        {imageURL && <Image source={{ uri: imageURL }} style={styles.image} />}
-      </TouchableOpacity>
-      <AppForm
-        initialValue={{
-          username: userData.username,
-          fullName: userData.fullName,
-          age: userData.age,
-          country: userData.country,
-          state: userData.state,
-          city: userData.city,
-          password: userData.password,
-        }}
-        onSubmit={(values) => handleSubmit(values)}
-      >
-        <AppFormField
-          autoCapitalize='none'
-          autoCorrect={false}
-          name='username'
-          placeholder='Username'
-          icon={Icons.fontAwesomeIcons("user")}
-        />
-        <AppFormField
-          autoCapitalize='words'
-          autoCorrect={false}
-          name='fullName'
-          placeholder='Full Name'
-          icon={Icons.fontAwesomeIcons("vcard")}
-        />
-        <AppFormField
-          name='age'
-          placeholder='Age'
-          icon={Icons.materialCommunityIcons("walk")}
-        />
-        <AppFormField
-          autoCapitalize='words'
-          autoCorrect={false}
-          name='country'
-          placeholder='Country'
-          icon={Icons.fontAwesomeIcons("flag")}
-        />
-        <AppFormField
-          autoCapitalize='words'
-          autoCorrect={false}
-          name='state'
-          placeholder='State'
-          icon={Icons.fontAwesomeIcons("flag")}
-        />
-        <AppFormField
-          autoCapitalize='words'
-          autoCorrect={false}
-          name='city'
-          placeholder='City'
-          icon={Icons.materialCommunityIcons("city")}
-        />
-        <AppFormField
-          autoCorrect={false}
-          name='password'
-          placeholder='Change Password'
-          secureTextEntry
-          icon={Icons.materialCommunityIcons("lock")}
-        />
-        <SubmitButton title='Save' isLoading={isLoading} />
-      </AppForm>
+      <KeyboardAwareScrollView>
+        <TouchableOpacity onPress={imagePicker} style={styles.selectImage}>
+          {!imageURL && Icons.fontAwesomeIcons("camera", 26)}
+          {imageURL && (
+            <Image source={{ uri: imageURL }} style={styles.image} />
+          )}
+        </TouchableOpacity>
+        <AppForm
+          initialValue={{
+            username: userData.username,
+            fullName: userData.fullName,
+            age: userData.age,
+            country: userData.country,
+            state: userData.state,
+            city: userData.city,
+            password: userData.password,
+          }}
+          onSubmit={(values) => handleSubmit(values)}
+        >
+          <AppFormField
+            autoCapitalize='none'
+            autoCorrect={false}
+            name='username'
+            placeholder='Username'
+            icon={Icons.fontAwesomeIcons("user")}
+          />
+          <AppFormField
+            autoCapitalize='words'
+            autoCorrect={false}
+            name='fullName'
+            placeholder='Full Name'
+            icon={Icons.fontAwesomeIcons("vcard")}
+          />
+          <AppFormField
+            name='age'
+            placeholder='Age'
+            icon={Icons.materialCommunityIcons("walk")}
+          />
+          <AppFormField
+            autoCapitalize='words'
+            autoCorrect={false}
+            name='country'
+            placeholder='Country'
+            icon={Icons.fontAwesomeIcons("flag")}
+          />
+          <AppFormField
+            autoCapitalize='words'
+            autoCorrect={false}
+            name='state'
+            placeholder='State'
+            icon={Icons.fontAwesomeIcons("flag")}
+          />
+          <AppFormField
+            autoCapitalize='words'
+            autoCorrect={false}
+            name='city'
+            placeholder='City'
+            icon={Icons.materialCommunityIcons("city")}
+          />
+          <AppFormField
+            autoCorrect={false}
+            name='password'
+            placeholder='Change Password'
+            secureTextEntry
+            icon={Icons.materialCommunityIcons("lock")}
+          />
+          <SubmitButton title='Save' isLoading={isLoading} />
+        </AppForm>
+      </KeyboardAwareScrollView>
 
       {!currentLocation && (
         <Text

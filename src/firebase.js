@@ -15,5 +15,6 @@ const app = !firebase.apps.length
   : firebase.app();
 
 const db = app.firestore();
+const storage = app.storage();
 
-export default db;
+export { db, storage };

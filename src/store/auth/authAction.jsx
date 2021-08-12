@@ -1,4 +1,4 @@
-import db from "../../firebase";
+import { db } from "../../firebase";
 import { removeItem, setItem } from "../../utils/Storage";
 import {
   LOGIN_START,
