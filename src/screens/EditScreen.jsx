@@ -1,5 +1,6 @@
 import React, { useLayoutEffect, useState } from "react";
 import { StyleSheet, Text, TouchableOpacity, View } from "react-native";
+import ImagePicker from "react-native-image-crop-picker";
 import MaterialCommunityIcons from "react-native-vector-icons/MaterialCommunityIcons";
 
 import { colors } from "../config/colors";
@@ -26,12 +27,21 @@ const EditScreen = ({ route, navigation }) => {
     console.log("save");
   };
 
+  const imagePicker = () => {
+    ImagePicker.openPicker({
+      width: 300,
+      height: 400,
+      cropping: true,
+    }).then((image) => {
+      console.log(image);
+    });
+  };
+
   return (
     <View style={styles.screen}>
-      <TouchableOpacity
-        onPress={() => console.log("select image")}
-        style={styles.selectImage}
-      ></TouchableOpacity>
+      <TouchableOpacity onPress={imagePicker} style={styles.selectImage}>
+        {Icons.fontAwesomeIcons("camera", 26)}
+      </TouchableOpacity>
       <AppForm
         initialValue={{
           username: userData.username,
@@ -98,6 +108,16 @@ const styles = StyleSheet.create({
   screen: {
     flex: 1,
     paddingHorizontal: 10,
+  },
+
+  selectImage: {
+    alignItems: "center",
+    backgroundColor: colors.mediumGray,
+    borderRadius: 15,
+    justifyContent: "center",
+    height: 100,
+    width: 100,
+    overflow: "hidden",
   },
 });
 
