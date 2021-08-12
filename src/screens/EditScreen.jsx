@@ -1,46 +1,69 @@
-import React, { useLayoutEffect, useState } from "react";
-import { StyleSheet, Text, TouchableOpacity, View } from "react-native";
+import React, { useState } from "react";
+import {
+  StyleSheet,
+  Text,
+  TouchableOpacity,
+  View,
+  Image,
+  ScrollView,
+} from "react-native";
+import { useSelector, useDispatch } from "react-redux";
 import ImagePicker from "react-native-image-crop-picker";
-import MaterialCommunityIcons from "react-native-vector-icons/MaterialCommunityIcons";
+import GetLocation from "react-native-get-location";
 
 import { colors } from "../config/colors";
-import { AppForm, AppFormField } from "../components/form";
+import { hp } from "../config/HeightWidth";
+import { AppForm, AppFormField, SubmitButton } from "../components/form";
 import Icons from "../config/Icons";
+import AppButton from "../components/AppButton";
+import { updateUserData } from "../store/auth/authAction";
 
-const EditScreen = ({ route, navigation }) => {
-  const [userData, setUserData] = useState(route.params.userData);
-
-  useLayoutEffect(() => {
-    navigation.setOptions({
-      headerRight: () => (
-        <MaterialCommunityIcons
-          name='check-bold'
-          size={26}
-          color={colors.white}
-          onPress={save}
-        />
-      ),
-    });
-  }, []);
-
-  const save = () => {
-    console.log("save");
-  };
+const EditScreen = () => {
+  const dispatch = useDispatch();
+  const { userData } = useSelector((state) => state.authReducer);
+  const [imageURL, setImageURL] = useState(null);
+  const [currentLocation, setCurrentLocation] = useState(null);
 
   const imagePicker = () => {
     ImagePicker.openPicker({
-      width: 300,
-      height: 400,
+      mediaType: "photo",
+      compressImageQuality: 0.5,
       cropping: true,
     }).then((image) => {
-      console.log(image);
+      setImageURL(image.sourceURL);
     });
   };
 
+  const changeCurrentLocation = () => {
+    GetLocation.getCurrentPosition({
+      enableHighAccuracy: false,
+      timeout: 15000,
+    })
+      .then((location) => {
+        setCurrentLocation(() => ({
+          latitude: location.latitude,
+          longitude: location.longitude,
+        }));
+      })
+      .catch((error) => {
+        const { code, message } = error;
+        console.warn(code, message);
+      });
+  };
+
+  const handleSubmit = async (data) => {
+    data.userCurrentLocation = currentLocation
+      ? currentLocation
+      : userData.userCurrentLocation;
+
+    await dispatch(updateUserData(data));
+  };
+
   return (
-    <View style={styles.screen}>
+    <ScrollView style={styles.screen}>
       <TouchableOpacity onPress={imagePicker} style={styles.selectImage}>
-        {Icons.fontAwesomeIcons("camera", 26)}
+        {!imageURL && Icons.fontAwesomeIcons("camera", 26)}
+        {imageURL && <Image source={{ uri: imageURL }} style={styles.image} />}
       </TouchableOpacity>
       <AppForm
         initialValue={{
@@ -50,8 +73,9 @@ const EditScreen = ({ route, navigation }) => {
           country: userData.country,
           state: userData.state,
           city: userData.city,
-          password: "",
+          password: userData.password,
         }}
+        onSubmit={(values) => handleSubmit(values)}
       >
         <AppFormField
           autoCapitalize='none'
@@ -97,17 +121,39 @@ const EditScreen = ({ route, navigation }) => {
           autoCorrect={false}
           name='password'
           placeholder='Change Password'
+          secureTextEntry
           icon={Icons.materialCommunityIcons("lock")}
         />
+        <SubmitButton title='Save' />
       </AppForm>
-    </View>
+
+      {!currentLocation && (
+        <Text
+          style={styles.currentLocation}
+        >{`${userData.userCurrentLocation.latitude}, ${userData.userCurrentLocation.longitude}`}</Text>
+      )}
+      {currentLocation && (
+        <Text
+          style={styles.currentLocation}
+        >{`${currentLocation.latitude}, ${currentLocation.longitude}`}</Text>
+      )}
+      <View style={styles.getLocationButtonView}>
+        <AppButton
+          title='Change Your Current Location'
+          onPress={changeCurrentLocation}
+          color='secondary'
+          style={styles.buttonGetLocation}
+        />
+      </View>
+    </ScrollView>
   );
 };
 
 const styles = StyleSheet.create({
   screen: {
-    flex: 1,
     paddingHorizontal: 10,
+    paddingTop: 10,
+    paddingBottom: 20,
   },
 
   selectImage: {
@@ -118,6 +164,25 @@ const styles = StyleSheet.create({
     height: 100,
     width: 100,
     overflow: "hidden",
+  },
+
+  image: {
+    width: "100%",
+    height: "100%",
+  },
+
+  currentLocation: {
+    textAlign: "center",
+    fontSize: 16,
+    marginTop: 10,
+  },
+
+  getLocationButtonView: {
+    height: hp("10%"),
+  },
+
+  buttonGetLocation: {
+    padding: 10,
   },
 });
 

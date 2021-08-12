@@ -43,7 +43,7 @@ const ProfileScreen = ({ navigation }) => {
           name='account-edit'
           size={26}
           color={colors.white}
-          onPress={() => navigation.navigate("Edit", { userData })}
+          onPress={() => navigation.navigate("Edit")}
         />
       ),
     });

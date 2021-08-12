@@ -8,6 +8,9 @@ import {
   REGISTRATION_COMPLETE,
   REGISTRATION_FAILED,
   STORE_USER_DATA,
+  UPDATE_USER_DATA_START,
+  UPDATE_USER_DATA_COMPLETE,
+  UPDATE_USER_DATA_FAILED,
   LOGOUT,
 } from "./types";
 
@@ -60,11 +63,33 @@ export const register =
     }
   };
 
+export const logout = () => async (dispatch) => {
+  await removeItem("userData");
+  dispatch({ type: LOGOUT });
+};
+
 export const storeUserData = (userData) => async (dispatch) => {
   dispatch({ type: STORE_USER_DATA, payload: JSON.parse(userData) });
 };
 
-export const logout = () => async (dispatch) => {
-  await removeItem("userData");
-  dispatch({ type: LOGOUT });
+export const updateUserData = (userData) => async (dispatch) => {
+  dispatch({ type: UPDATE_USER_DATA_START });
+  try {
+    await db.collection("users").doc(userData.id).set({
+      username: userData.username,
+      fullName: userData.fullName,
+      age: userData.age,
+      country: userData.country,
+      state: userData.state,
+      city: userData.city,
+      userCurrentLocation: userData.userCurrentLocation,
+      password: userData.password,
+      gender: userData.gender,
+    });
+
+    dispatch({ type: UPDATE_USER_DATA_COMPLETE, payload: userData });
+  } catch (error) {
+    dispatch({ type: UPDATE_USER_DATA_FAILED });
+    console.log("Error in update user data", error);
+  }
 };

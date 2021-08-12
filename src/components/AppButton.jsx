@@ -26,7 +26,7 @@ const AppButton = ({
 
   return (
     <TouchableOpacity
-      style={[styles.button, { backgroundColor: colors[color], style }]}
+      style={[styles.button, { backgroundColor: colors[color] }, style]}
       onPress={onPress}
       disabled={isLoading}
     >
