@@ -57,12 +57,11 @@ const ProfileScreen = ({ navigation }) => {
         <Avatar
           rounded
           size={120}
-          icon={{ name: "user", type: "font-awesome" }}
-          onPress={() => console.log("Works!")}
+          icon={{ name: "user", color: "orange", type: "font-awesome" }}
           source={{
             uri: userData?.profileImage,
           }}
-          containerStyle={{ borderColor: colors.mediumGray, borderWidth: 1 }}
+          containerStyle={{ borderColor: colors.primary, borderWidth: 1 }}
         />
         <Text style={styles.userName}>{userData.fullName}</Text>
       </View>
