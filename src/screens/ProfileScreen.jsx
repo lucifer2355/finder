@@ -1,7 +1,7 @@
 import React, { useEffect, useState, useLayoutEffect } from "react";
-import { StyleSheet, Text, View, FlatList } from "react-native";
+import { StyleSheet, Text, View, FlatList, Image } from "react-native";
 import { useSelector, useDispatch } from "react-redux";
-import ProfilePicture from "react-native-profile-picture";
+import { Avatar } from "react-native-elements";
 import MaterialCommunityIcons from "react-native-vector-icons/MaterialCommunityIcons";
 
 import { colors } from "../config/colors";
@@ -54,13 +54,21 @@ const ProfileScreen = ({ navigation }) => {
   return (
     <View style={styles.screen}>
       <View style={styles.profileImage}>
-        <ProfilePicture
-          isPicture={false}
-          user={userData.fullName}
-          shape='circle'
-          width={100}
-          height={100}
+        <Image
+          source={{
+            uri: "https://firebasestorage.googleapis.com/v0/b/finder-82b37.appspot.com/o/images%2FIMG_0001.JPG?alt=media&token=292e561e-6bf7-42dc-bbb3-76b1e08e04ce",
+          }}
         />
+        {true ? (
+          <Avatar
+            rounded
+            source={{
+              uri: "https://s3.amazonaws.com/uifaces/faces/twitter/adhamdannaway/128.jpg",
+            }}
+          />
+        ) : (
+          <Avatar rounded title={userData.fullName} />
+        )}
         <Text style={styles.userName}>{userData.fullName}</Text>
       </View>
 

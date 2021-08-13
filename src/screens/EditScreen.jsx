@@ -21,7 +21,7 @@ import AppButton from "../components/AppButton";
 import { updateUserData } from "../store/auth/authAction";
 import { storage } from "../firebase";
 
-const EditScreen = () => {
+const EditScreen = ({ navigation }) => {
   const dispatch = useDispatch();
   const { userData, isLoading } = useSelector((state) => state.authReducer);
   const [profileImage, setProfileImage] = useState(null);
@@ -30,7 +30,7 @@ const EditScreen = () => {
   const imagePicker = () => {
     ImagePicker.openPicker({
       mediaType: "photo",
-      compressImageQuality: 0.5,
+      compressImageQuality: 0.2,
       cropping: true,
     }).then((image) => {
       Platform.OS === "ios"
@@ -63,7 +63,8 @@ const EditScreen = () => {
       : userData.userCurrentLocation;
     data.gender = userData.gender;
 
-    await dispatch(updateUserData(data, profileImage));
+    await dispatch(updateUserData(data, profileImage, navigation));
+    console.log("after dispatch");
   };
 
   return (
