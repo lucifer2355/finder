@@ -54,21 +54,16 @@ const ProfileScreen = ({ navigation }) => {
   return (
     <View style={styles.screen}>
       <View style={styles.profileImage}>
-        <Image
+        <Avatar
+          rounded
+          size={120}
+          icon={{ name: "user", type: "font-awesome" }}
+          onPress={() => console.log("Works!")}
           source={{
-            uri: "https://firebasestorage.googleapis.com/v0/b/finder-82b37.appspot.com/o/images%2FIMG_0001.JPG?alt=media&token=292e561e-6bf7-42dc-bbb3-76b1e08e04ce",
+            uri: userData?.profileImage,
           }}
+          containerStyle={{ borderColor: colors.mediumGray, borderWidth: 1 }}
         />
-        {true ? (
-          <Avatar
-            rounded
-            source={{
-              uri: "https://s3.amazonaws.com/uifaces/faces/twitter/adhamdannaway/128.jpg",
-            }}
-          />
-        ) : (
-          <Avatar rounded title={userData.fullName} />
-        )}
         <Text style={styles.userName}>{userData.fullName}</Text>
       </View>
 

@@ -131,6 +131,7 @@ export const updateUserData =
                 profileImage: url,
               });
 
+              setItem("userData", userData);
               dispatch({ type: UPDATE_USER_DATA_COMPLETE, payload: userData });
               navigation.goBack();
             });
