@@ -1,4 +1,4 @@
-import { db } from "../../firebase";
+import { db, storage } from "../../firebase";
 import { removeItem, setItem } from "../../utils/Storage";
 import {
   LOGIN_START,
@@ -72,22 +72,66 @@ export const storeUserData = (userData) => async (dispatch) => {
   dispatch({ type: STORE_USER_DATA, payload: JSON.parse(userData) });
 };
 
-export const updateUserData = (userData) => async (dispatch) => {
+export const updateUserData = (userData, profileImage) => async (dispatch) => {
   dispatch({ type: UPDATE_USER_DATA_START });
   try {
-    await db.collection("users").doc(userData.id).set({
-      username: userData.username,
-      fullName: userData.fullName,
-      age: userData.age,
-      country: userData.country,
-      state: userData.state,
-      city: userData.city,
-      userCurrentLocation: userData.userCurrentLocation,
-      password: userData.password,
-      gender: userData.gender,
+    const filename = profileImage.substring(profileImage.lastIndexOf("/") + 1);
+    const blob = await new Promise((resolve, reject) => {
+      const xhr = new XMLHttpRequest();
+      xhr.onload = function () {
+        resolve(xhr.response);
+      };
+      xhr.onerror = function (e) {
+        console.log(e);
+        reject(new TypeError("Network request failed"));
+      };
+      xhr.responseType = "blob";
+      xhr.open("GET", profileImage, true);
+      xhr.send(null);
     });
 
-    dispatch({ type: UPDATE_USER_DATA_COMPLETE, payload: userData });
+    const uploadTask = storage
+      .ref()
+      .child("images/" + filename)
+      .put(blob);
+
+    uploadTask.on(
+      "state_changed",
+      (snapshort) => {
+        const progress = Math.round(
+          (snapshort.bytesTransferred / snapshort.totalBytes) * 100
+        );
+        console.log(progress);
+      },
+      (error) => {
+        console.log(error);
+        alert(error.message);
+      },
+      () => {
+        storage
+          .ref("images")
+          .child(filename)
+          .getDownloadURL()
+          .then((url) => {
+            userData.profileImage = url;
+
+            db.collection("users").doc(userData.id).set({
+              username: userData.username,
+              fullName: userData.fullName,
+              age: userData.age,
+              country: userData.country,
+              state: userData.state,
+              city: userData.city,
+              userCurrentLocation: userData.userCurrentLocation,
+              password: userData.password,
+              gender: userData.gender,
+              profileImage: url,
+            });
+
+            dispatch({ type: UPDATE_USER_DATA_COMPLETE, payload: userData });
+          });
+      }
+    );
   } catch (error) {
     dispatch({ type: UPDATE_USER_DATA_FAILED });
     console.log("Error in update user data", error);

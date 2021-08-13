@@ -6,6 +6,7 @@ import {
   View,
   Image,
   ScrollView,
+  Platform,
 } from "react-native";
 import { useSelector, useDispatch } from "react-redux";
 import { KeyboardAwareScrollView } from "react-native-keyboard-aware-scroll-view";
@@ -18,11 +19,12 @@ import { AppForm, AppFormField, SubmitButton } from "../components/form";
 import Icons from "../config/Icons";
 import AppButton from "../components/AppButton";
 import { updateUserData } from "../store/auth/authAction";
+import { storage } from "../firebase";
 
 const EditScreen = () => {
   const dispatch = useDispatch();
   const { userData, isLoading } = useSelector((state) => state.authReducer);
-  const [imageURL, setImageURL] = useState(null);
+  const [profileImage, setProfileImage] = useState(null);
   const [currentLocation, setCurrentLocation] = useState(null);
 
   const imagePicker = () => {
@@ -31,7 +33,9 @@ const EditScreen = () => {
       compressImageQuality: 0.5,
       cropping: true,
     }).then((image) => {
-      setImageURL(image.sourceURL);
+      Platform.OS === "ios"
+        ? setProfileImage(image.sourceURL)
+        : setProfileImage(image.path);
     });
   };
 
@@ -59,16 +63,16 @@ const EditScreen = () => {
       : userData.userCurrentLocation;
     data.gender = userData.gender;
 
-    await dispatch(updateUserData(data));
+    await dispatch(updateUserData(data, profileImage));
   };
 
   return (
     <ScrollView style={styles.screen}>
       <KeyboardAwareScrollView>
         <TouchableOpacity onPress={imagePicker} style={styles.selectImage}>
-          {!imageURL && Icons.fontAwesomeIcons("camera", 26)}
-          {imageURL && (
-            <Image source={{ uri: imageURL }} style={styles.image} />
+          {!profileImage && Icons.fontAwesomeIcons("camera", 26)}
+          {profileImage && (
+            <Image source={{ uri: profileImage }} style={styles.image} />
           )}
         </TouchableOpacity>
         <AppForm
