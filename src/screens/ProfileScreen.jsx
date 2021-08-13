@@ -49,8 +49,6 @@ const ProfileScreen = ({ navigation }) => {
     });
   }, []);
 
-  useEffect(() => {}, []);
-
   return (
     <View style={styles.screen}>
       <View style={styles.profileImage}>
