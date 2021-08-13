@@ -55,7 +55,7 @@ const ProfileScreen = ({ navigation }) => {
         <Avatar
           rounded
           size={120}
-          icon={{ name: "user", color: "orange", type: "font-awesome" }}
+          icon={{ name: "user", type: "font-awesome" }}
           source={{
             uri: userData?.profileImage,
           }}

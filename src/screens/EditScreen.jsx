@@ -71,9 +71,16 @@ const EditScreen = ({ navigation }) => {
     <ScrollView style={styles.screen}>
       <KeyboardAwareScrollView>
         <TouchableOpacity onPress={imagePicker} style={styles.selectImage}>
-          {!profileImage && Icons.fontAwesomeIcons("camera", 26)}
-          {profileImage && (
-            <Image source={{ uri: profileImage }} style={styles.image} />
+          {!userData?.profileImage &&
+            !profileImage &&
+            Icons.fontAwesomeIcons("camera", 26)}
+          {(profileImage || userData.profileImage) && (
+            <Image
+              source={{
+                uri: profileImage ? profileImage : userData.profileImage,
+              }}
+              style={styles.image}
+            />
           )}
         </TouchableOpacity>
         <AppForm
