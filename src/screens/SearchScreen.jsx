@@ -4,14 +4,16 @@ import DropDownPicker from "react-native-dropdown-picker";
 
 import Icons from "../config/Icons";
 import AppTextInput from "../components/AppTextInput";
+import { colors } from "../config/colors";
 
 const SearchScreen = () => {
   const [values, setValues] = useState({ country: "", state: "", city: "" });
-  const [open, setOpen] = useState(false);
-  const [value, setValue] = useState(null);
+  const [openDropDown, setOpenDropDown] = useState(false);
+  const [age, setAge] = useState("20 - 23");
   const [items, setItems] = useState([
-    { label: "Apple", value: "apple" },
-    { label: "Banana", value: "banana" },
+    { label: "20 - 23", value: "20 - 23" },
+    { label: "24 - 27", value: "24 - 27" },
+    { label: "28 - 34", value: "28 - 34" },
   ]);
 
   return (
@@ -39,12 +41,14 @@ const SearchScreen = () => {
       />
 
       <DropDownPicker
-        open={open}
-        value={value}
+        open={openDropDown}
+        value={age}
         items={items}
-        setOpen={setOpen}
-        setValue={setValue}
+        setOpen={setOpenDropDown}
+        setValue={setAge}
         setItems={setItems}
+        labelStyle={styles.dropDownLabelStyle}
+        style={styles.dropDown}
       />
     </View>
   );
@@ -53,6 +57,19 @@ const SearchScreen = () => {
 const styles = StyleSheet.create({
   screen: {
     flex: 1,
+    paddingHorizontal: 10,
+  },
+
+  dropDown: {
+    backgroundColor: colors.transparentBlack,
+    borderRadius: 25,
+    paddingHorizontal: 25,
+  },
+
+  dropDownLabelStyle: {
+    fontSize: 18,
+    fontWeight: "600",
+    color: colors.white,
   },
 });
 
