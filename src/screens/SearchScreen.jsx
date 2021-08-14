@@ -10,14 +10,12 @@ import { useDispatch, useSelector } from "react-redux";
 
 import { colors } from "../config/colors";
 import { AppForm, AppFormField, SubmitButton } from "../components/form";
-import Icons from "../config/Icons";
 import { search } from "../store/search/searchAction";
+import Icons from "../config/Icons";
 
 const SearchScreen = ({ navigation }) => {
   const dispatch = useDispatch();
-  const { isLoading, searchResult } = useSelector(
-    (state) => state.searchReducer
-  );
+  const { isLoading } = useSelector((state) => state.searchReducer);
   const { userData } = useSelector((state) => state.authReducer);
 
   const radio_props = [
@@ -36,7 +34,7 @@ const SearchScreen = ({ navigation }) => {
   const handleSubmit = async (placeInfo) => {
     await dispatch(search(placeInfo, age, gender, userData.id));
 
-    navigation.navigate("SearchResult", searchResult);
+    navigation.navigate("SearchResult");
   };
 
   return (
