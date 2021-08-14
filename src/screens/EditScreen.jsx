@@ -69,7 +69,7 @@ const EditScreen = ({ navigation }) => {
 
   return (
     <ScrollView style={styles.screen}>
-      <KeyboardAwareScrollView>
+      <KeyboardAwareScrollView style={styles.editForm}>
         <TouchableOpacity onPress={imagePicker} style={styles.selectImage}>
           {!userData?.profileImage &&
             !profileImage &&
@@ -142,28 +142,22 @@ const EditScreen = ({ navigation }) => {
             secureTextEntry
             icon={Icons.materialCommunityIcons("lock")}
           />
+
+          <Text style={styles.currentLocation}>
+            {currentLocation
+              ? `${currentLocation.latitude}, ${currentLocation.longitude}`
+              : `${userData.userCurrentLocation.latitude}, ${userData.userCurrentLocation.longitude}`}
+          </Text>
+          <AppButton
+            title='Change Your Current Location'
+            onPress={changeCurrentLocation}
+            color='secondary'
+            style={styles.buttonGetLocation}
+          />
+
           <SubmitButton title='Save' isLoading={isLoading} />
         </AppForm>
       </KeyboardAwareScrollView>
-
-      {!currentLocation && (
-        <Text
-          style={styles.currentLocation}
-        >{`${userData.userCurrentLocation.latitude}, ${userData.userCurrentLocation.longitude}`}</Text>
-      )}
-      {currentLocation && (
-        <Text
-          style={styles.currentLocation}
-        >{`${currentLocation.latitude}, ${currentLocation.longitude}`}</Text>
-      )}
-      <View style={styles.getLocationButtonView}>
-        <AppButton
-          title='Change Your Current Location'
-          onPress={changeCurrentLocation}
-          color='secondary'
-          style={styles.buttonGetLocation}
-        />
-      </View>
     </ScrollView>
   );
 };
@@ -173,6 +167,10 @@ const styles = StyleSheet.create({
     paddingHorizontal: 10,
     paddingTop: 10,
     paddingBottom: 20,
+  },
+
+  editForm: {
+    marginBottom: 10,
   },
 
   selectImage: {
@@ -194,10 +192,6 @@ const styles = StyleSheet.create({
     textAlign: "center",
     fontSize: 16,
     marginTop: 10,
-  },
-
-  getLocationButtonView: {
-    height: hp("10%"),
   },
 
   buttonGetLocation: {
