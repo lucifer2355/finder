@@ -16,6 +16,7 @@ import { search } from "../store/search/searchAction";
 const SearchScreen = () => {
   const dispatch = useDispatch();
   const { isLoading } = useSelector((state) => state.searchReducer);
+  const { userData } = useSelector((state) => state.authReducer);
 
   const radio_props = [
     { label: "Male", value: "male" },
@@ -30,7 +31,9 @@ const SearchScreen = () => {
     { label: "28 - 34", value: "28 - 34" },
   ]);
 
-  const handleSubmit = async (placeInfo) => {};
+  const handleSubmit = async (placeInfo) => {
+    await dispatch(search(placeInfo, age, gender, userData.id));
+  };
 
   return (
     <View style={styles.screen}>
