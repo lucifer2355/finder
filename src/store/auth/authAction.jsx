@@ -30,6 +30,7 @@ export const login = (username, password) => async (dispatch) => {
             data.id = id;
             setItem("userData", data);
             dispatch({ type: LOGIN_COMPLETE, payload: data });
+            return;
           }
         });
       });

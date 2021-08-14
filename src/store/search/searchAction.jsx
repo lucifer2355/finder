@@ -1,31 +1,30 @@
 import { SEARCH_START, SEARCH_COMPLETE, SEARCH_FAILED } from "./types";
+import { db } from "../../firebase";
 
-const initialState = {
-  searchResult: [],
-  isLoading: false,
-};
+export const search = (placeInfo, age, gender) => async (dispatch) => {
+  dispatch({ type: SEARCH_START });
+  try {
+    await db
+      .collection("users")
+      .get()
+      .then((querySnapshot) => {
+        querySnapshot.forEach((snapshot) => {
+          const data = snapshot.data();
+          const id = snapshot.id;
 
-export default searchReducer = (state = initialState, action) => {
-  switch (action.type) {
-    case SEARCH_START:
-      return {
-        ...state,
-        isLoading: true,
-      };
-
-    case SEARCH_COMPLETE:
-      return {
-        isLoading: false,
-        searchResult: action.payload,
-      };
-
-    case SEARCH_FAILED:
-      return {
-        ...state,
-        isLoading: false,
-      };
-
-    default:
-      return state;
+          if (
+            (data.city === placeInfo.city ||
+              data.state === placeInfo.state ||
+              data.country === placeInfo.country) &&
+            data.gender === gender
+          ) {
+            data.id = id;
+            console.log(data);
+          }
+        });
+      });
+  } catch (error) {
+    dispatch({ type: SEARCH_FAILED });
+    console.log("Error in search", error);
   }
 };

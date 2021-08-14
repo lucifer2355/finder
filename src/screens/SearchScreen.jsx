@@ -6,12 +6,17 @@ import RadioForm, {
   RadioButtonLabel,
 } from "react-native-simple-radio-button";
 import DropDownPicker from "react-native-dropdown-picker";
+import { useDispatch, useSelector } from "react-redux";
 
 import { colors } from "../config/colors";
 import { AppForm, AppFormField, SubmitButton } from "../components/form";
 import Icons from "../config/Icons";
+import { search } from "../store/search/searchAction";
 
 const SearchScreen = () => {
+  const dispatch = useDispatch();
+  const { isLoading } = useSelector((state) => state.searchReducer);
+
   const radio_props = [
     { label: "Male", value: "male" },
     { label: "Female", value: "female" },
@@ -25,9 +30,7 @@ const SearchScreen = () => {
     { label: "28 - 34", value: "28 - 34" },
   ]);
 
-  const handleSubmit = () => {
-    console.log("search");
-  };
+  const handleSubmit = async (placeInfo) => {};
 
   return (
     <View style={styles.screen}>
@@ -95,7 +98,7 @@ const SearchScreen = () => {
           </RadioForm>
         </View>
 
-        <SubmitButton title='Search' />
+        <SubmitButton title='Search' isLoading={isLoading} />
       </AppForm>
     </View>
   );
