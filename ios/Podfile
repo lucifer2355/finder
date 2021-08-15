@@ -18,6 +18,8 @@ target 'fakeWhatsapp' do
   pod 'RNCAsyncStorage', :path => '../node_modules/@react-native-async-storage/async-storage'
 
 
+  pod 'RNSVG', :path => '../node_modules/react-native-svg'
+
   target 'fakeWhatsappTests' do
     inherit! :complete
     # Pods for testing

@@ -17,7 +17,11 @@ const SearchNavigator = () => (
     }}
   >
     <Stack.Screen name='Search' component={SearchScreen} />
-    <Stack.Screen name='SearchResult' component={SearchResultScreen} />
+    <Stack.Screen
+      name='SearchResult'
+      component={SearchResultScreen}
+      options={{ title: "Search Results" }}
+    />
   </Stack.Navigator>
 );
 
