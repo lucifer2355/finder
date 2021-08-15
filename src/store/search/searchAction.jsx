@@ -19,7 +19,8 @@ export const search =
                 data.state === placeInfo?.state ||
                 data.country === placeInfo?.country) &&
               id !== loginUserId &&
-              age.split(" ")[0] <= data.age <= age.split(" ")[2] &&
+              age.split(" ")[0] <= data.age &&
+              data.age <= age.split(" ")[2] &&
               data.gender === gender
             ) {
               data.id = id;

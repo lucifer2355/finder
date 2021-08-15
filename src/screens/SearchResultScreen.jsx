@@ -1,5 +1,5 @@
 import React from "react";
-import { StyleSheet, Text, View } from "react-native";
+import { StyleSheet, View } from "react-native";
 import { useSelector } from "react-redux";
 import SvgUri from "react-native-svg-uri";
 import { ListItem, Avatar } from "react-native-elements";
