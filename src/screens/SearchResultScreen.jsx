@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { StyleSheet, View } from "react-native";
 import { useSelector } from "react-redux";
 import SvgUri from "react-native-svg-uri";
@@ -6,9 +6,11 @@ import { ListItem, Avatar } from "react-native-elements";
 import AntDesign from "react-native-vector-icons/AntDesign";
 
 import { colors } from "../config/colors";
+import { db } from "../firebase";
 
 const SearchResultScreen = () => {
   const { searchResult } = useSelector((state) => state.searchReducer);
+  const { userData } = useSelector((state) => state.authReducer);
 
   if (searchResult.length === 0) {
     return (
@@ -20,9 +22,7 @@ const SearchResultScreen = () => {
     );
   }
 
-  const sentRequest = () => {
-    console.log("sent request");
-  };
+  const sentRequest = async (userId) => {};
 
   return (
     <View>
@@ -45,7 +45,7 @@ const SearchResultScreen = () => {
             name='pluscircleo'
             size={28}
             color={colors.primary}
-            onPress={sentRequest}
+            onPress={() => sentRequest(s.id)}
           />
         </ListItem>
       ))}
