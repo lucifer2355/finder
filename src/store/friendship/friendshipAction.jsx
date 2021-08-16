@@ -60,7 +60,7 @@ export const deleteSentRequest =
     }
   };
 
-export const deleteSentRequest =
+export const deleteReceivedRequest =
   (loginUserId, deleteRequestId) => async (dispatch) => {
     try {
       await deleteRequest(loginUserId, deleteRequestId);

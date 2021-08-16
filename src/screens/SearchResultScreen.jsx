@@ -27,15 +27,17 @@ const SearchResultScreen = () => {
     );
   }
 
-  const getSentRequests = async () => {
+  const fetchSentRequests = async () => {
     await dispatch(getSentRequests(userData.id));
   };
 
-  const sentRequest = async (receiverUserId) => {
+  const handleSentRequest = async (receiverUserId) => {
     await dispatch(sentRequest(userData.id, receiverUserId));
   };
 
-  useEffect(() => {}, []);
+  useEffect(() => {
+    fetchSentRequests();
+  }, []);
 
   return (
     <View>
@@ -58,7 +60,7 @@ const SearchResultScreen = () => {
             name='pluscircleo'
             size={28}
             color={colors.primary}
-            onPress={() => sentRequest(s.id)}
+            onPress={() => handleSentRequest(s.id)}
           />
         </ListItem>
       ))}

@@ -40,6 +40,12 @@ export const friendshipReducer = (state = initialState, action) => {
         friends: state.friends(action.payload),
       };
 
+    case GET_SENT_REQUESTS:
+      return {
+        ...state,
+        sentRequests: action.payload,
+      };
+
     default:
       return state;
   }
