@@ -96,17 +96,18 @@ export const acceptRequest =
 export const getSentRequests = (loginUserId) => async (dispatch) => {
   try {
     const sentRequests = [];
-    db.collection("friendship")
+    await db
+      .collection("friendship")
       .doc(loginUserId)
       .collection("sentRequest")
       .get()
       .then((querySnapshot) => {
         querySnapshot.forEach((snapshot) => {
           const data = snapshot.data();
-
           sentRequests.push(data);
         });
-      });
+      })
+      .then((sentRequests) => console.log("hello", sentRequests));
 
     dispatch({ type: GET_SENT_REQUESTS, payload: sentRequests });
   } catch (error) {

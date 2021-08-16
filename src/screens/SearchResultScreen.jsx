@@ -16,6 +16,7 @@ const SearchResultScreen = () => {
   const dispatch = useDispatch();
   const { searchResult } = useSelector((state) => state.searchReducer);
   const { userData } = useSelector((state) => state.authReducer);
+  const { sentRequests } = useSelector((state) => state.friendshipReducer);
 
   if (searchResult.length === 0) {
     return (
