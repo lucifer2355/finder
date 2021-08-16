@@ -1,5 +1,27 @@
-import { SENT_REQUEST, DELETE_REQUEST, ACCEPT_REQUEST } from "./types";
+import {
+  SENT_REQUEST,
+  DELETE_SENT_REQUEST,
+  DELETE_RECEIVED_REQUEST,
+  ACCEPT_REQUEST,
+} from "./types";
 import { db } from "../../firebase";
+
+const deleteRequest = async (loginUserId, deleteRequestId) => {
+  await db
+    .collection("friendship")
+    .doc(loginUserId)
+    .collection("sentRequest")
+    .delete({
+      userId: deleteRequestId,
+    });
+  await db
+    .collection("friendship")
+    .doc(deleteRequestId)
+    .collection("receiveRequest")
+    .delete({
+      userId: loginUserId,
+    });
+};
 
 export const sentRequest =
   (loginUserId, receiverUserId) => async (dispatch) => {
@@ -19,29 +41,27 @@ export const sentRequest =
           userId: loginUserId,
         });
 
-      dispatch({ type: SENT_REQUEST });
+      dispatch({ type: SENT_REQUEST, payload: receiverUserId });
     } catch (error) {
       console.log("Error in sent request", error);
     }
   };
 
-export const deleteRequest =
+export const deleteSentRequest =
   (loginUserId, deleteRequestId) => async (dispatch) => {
     try {
-      await db
-        .collection("friendship")
-        .doc(loginUserId)
-        .collection("sentRequest")
-        .delete({
-          userId: deleteRequestId,
-        });
-      await db
-        .collection("friendship")
-        .doc(deleteRequestId)
-        .collection("receiveRequest")
-        .delete({
-          userId: loginUserId,
-        });
+      await deleteRequest(loginUserId, deleteRequestId);
+      dispatch({ type: DELETE_SENT_REQUEST, payload: deleteRequestId });
+    } catch (error) {
+      console.log("Error in delete request", error);
+    }
+  };
+
+export const deleteSentRequest =
+  (loginUserId, deleteRequestId) => async (dispatch) => {
+    try {
+      await deleteRequest(loginUserId, deleteRequestId);
+      dispatch({ type: DELETE_RECEIVED_REQUEST, payload: deleteRequestId });
     } catch (error) {
       console.log("Error in delete request", error);
     }
@@ -65,5 +85,7 @@ export const acceptRequest =
           userId: loginUserId,
         });
       dispatch(deleteRequest(loginUserId, acceptRequestId));
+
+      dispatch({ type: ACCEPT_REQUEST, payload: acceptRequestId });
     } catch (error) {}
   };
