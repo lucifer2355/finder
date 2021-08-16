@@ -1,14 +1,19 @@
 import React, { useEffect } from "react";
 import { StyleSheet, View } from "react-native";
-import { useSelector } from "react-redux";
+import { useSelector, useDispatch } from "react-redux";
 import SvgUri from "react-native-svg-uri";
 import { ListItem, Avatar } from "react-native-elements";
 import AntDesign from "react-native-vector-icons/AntDesign";
 
 import { colors } from "../config/colors";
 import { db } from "../firebase";
+import {
+  getSentRequests,
+  sentRequest,
+} from "../store/friendship/friendshipAction";
 
 const SearchResultScreen = () => {
+  const dispatch = useDispatch();
   const { searchResult } = useSelector((state) => state.searchReducer);
   const { userData } = useSelector((state) => state.authReducer);
 
@@ -22,7 +27,15 @@ const SearchResultScreen = () => {
     );
   }
 
-  const sentRequest = async (userId) => {};
+  const getSentRequests = async () => {
+    await dispatch(getSentRequests(userData.id));
+  };
+
+  const sentRequest = async (receiverUserId) => {
+    await dispatch(sentRequest(userData.id, receiverUserId));
+  };
+
+  useEffect(() => {}, []);
 
   return (
     <View>

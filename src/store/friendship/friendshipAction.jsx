@@ -3,6 +3,9 @@ import {
   DELETE_SENT_REQUEST,
   DELETE_RECEIVED_REQUEST,
   ACCEPT_REQUEST,
+  GET_SENT_REQUESTS,
+  GET_RECEIVE_REQUESTS,
+  GET_FRIENDS_LIST,
 } from "./types";
 import { db } from "../../firebase";
 
@@ -89,3 +92,24 @@ export const acceptRequest =
       dispatch({ type: ACCEPT_REQUEST, payload: acceptRequestId });
     } catch (error) {}
   };
+
+export const getSentRequests = (loginUserId) => async (dispatch) => {
+  try {
+    const sentRequests = [];
+    db.collection("friendship")
+      .doc(loginUserId)
+      .collection("sentRequest")
+      .get()
+      .then((querySnapshot) => {
+        querySnapshot.forEach((snapshot) => {
+          const data = snapshot.data();
+
+          sentRequests.push(data);
+        });
+      });
+
+    dispatch({ type: GET_SENT_REQUESTS, payload: sentRequests });
+  } catch (error) {
+    console.log("Error in getSetRequests", error);
+  }
+};

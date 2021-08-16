@@ -3,6 +3,9 @@ import {
   DELETE_SENT_REQUEST,
   DELETE_RECEIVED_REQUEST,
   ACCEPT_REQUEST,
+  GET_SENT_REQUESTS,
+  GET_RECEIVE_REQUESTS,
+  GET_FRIENDS_LIST,
 } from "./types";
 
 const initialState = {
