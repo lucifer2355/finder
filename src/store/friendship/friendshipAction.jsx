@@ -9,23 +9,6 @@ import {
 } from "./types";
 import { db } from "../../firebase";
 
-const deleteRequest = async (loginUserId, deleteRequestId) => {
-  await db
-    .collection("friendship")
-    .doc(loginUserId)
-    .collection("sentRequest")
-    .delete({
-      userId: deleteRequestId,
-    });
-  await db
-    .collection("friendship")
-    .doc(deleteRequestId)
-    .collection("receiveRequest")
-    .delete({
-      userId: loginUserId,
-    });
-};
-
 export const sentRequest =
   (loginUserId, receiverUserId) => async (dispatch) => {
     try {
@@ -53,7 +36,18 @@ export const sentRequest =
 export const deleteSentRequest =
   (loginUserId, deleteRequestId) => async (dispatch) => {
     try {
-      await deleteRequest(loginUserId, deleteRequestId);
+      await db
+        .collection("friendship")
+        .doc(loginUserId)
+        .collection("sentRequest")
+        .doc(deleteRequestId)
+        .delete();
+      await db
+        .collection("friendship")
+        .doc(deleteRequestId)
+        .collection("receiveRequest")
+        .doc(loginUserId)
+        .delete();
       dispatch({ type: DELETE_SENT_REQUEST, payload: deleteRequestId });
     } catch (error) {
       console.log("Error in delete request", error);
@@ -63,7 +57,18 @@ export const deleteSentRequest =
 export const deleteReceivedRequest =
   (loginUserId, deleteRequestId) => async (dispatch) => {
     try {
-      await deleteRequest(loginUserId, deleteRequestId);
+      await db
+        .collection("friendship")
+        .doc(loginUserId)
+        .collection("receiveRequest")
+        .doc(deleteRequestId)
+        .delete();
+      await db
+        .collection("friendship")
+        .doc(deleteRequestId)
+        .collection("sentRequest")
+        .doc(loginUserId)
+        .delete();
       dispatch({ type: DELETE_RECEIVED_REQUEST, payload: deleteRequestId });
     } catch (error) {
       console.log("Error in delete request", error);
@@ -104,7 +109,7 @@ export const getSentRequests = (loginUserId) => async (dispatch) => {
       .then((querySnapshot) => {
         querySnapshot.forEach((snapshot) => {
           const data = snapshot.data();
-          sentRequests.push(data);
+          sentRequests.push(data.userId);
         });
       })
       .then((sentRequests) => console.log("hello", sentRequests));

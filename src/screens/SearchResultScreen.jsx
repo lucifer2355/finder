@@ -1,15 +1,15 @@
 import React, { useEffect } from "react";
-import { StyleSheet, View } from "react-native";
+import { StyleSheet, View, Text, TouchableOpacity } from "react-native";
 import { useSelector, useDispatch } from "react-redux";
 import SvgUri from "react-native-svg-uri";
 import { ListItem, Avatar } from "react-native-elements";
 import AntDesign from "react-native-vector-icons/AntDesign";
 
 import { colors } from "../config/colors";
-import { db } from "../firebase";
 import {
   getSentRequests,
   sentRequest,
+  deleteSentRequest,
 } from "../store/friendship/friendshipAction";
 
 const SearchResultScreen = () => {
@@ -36,6 +36,10 @@ const SearchResultScreen = () => {
     await dispatch(sentRequest(userData.id, receiverUserId));
   };
 
+  const handleCancelRequest = async (loginUserId, cancelReqId) => {
+    await dispatch(deleteSentRequest(loginUserId, cancelReqId));
+  };
+
   useEffect(() => {
     fetchSentRequests();
   }, []);
@@ -57,12 +61,20 @@ const SearchResultScreen = () => {
             <ListItem.Title style={styles.title}>{s.fullName}</ListItem.Title>
             <ListItem.Subtitle>{`${s.age} Years, ${s.city}, ${s.state}, ${s.country}`}</ListItem.Subtitle>
           </ListItem.Content>
-          <AntDesign
-            name='pluscircleo'
-            size={28}
-            color={colors.primary}
-            onPress={() => handleSentRequest(s.id)}
-          />
+          {sentRequests.includes(s.id) ? (
+            <TouchableOpacity
+              onPress={() => handleCancelRequest(userData.id, s.id)}
+            >
+              <Text style={styles.cancelRequestText}>Cancel Req</Text>
+            </TouchableOpacity>
+          ) : (
+            <AntDesign
+              name='pluscircleo'
+              size={28}
+              color={colors.primary}
+              onPress={() => handleSentRequest(s.id)}
+            />
+          )}
         </ListItem>
       ))}
     </View>
@@ -73,6 +85,12 @@ const styles = StyleSheet.create({
   title: {
     fontSize: 18,
     fontWeight: "bold",
+  },
+
+  cancelRequestText: {
+    color: colors.blueLight,
+    fontSize: 16,
+    fontWeight: "700",
   },
 });
 
