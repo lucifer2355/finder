@@ -61,7 +61,7 @@ const SearchResultScreen = () => {
             <ListItem.Title style={styles.title}>{s.fullName}</ListItem.Title>
             <ListItem.Subtitle>{`${s.age} Years, ${s.city}, ${s.state}, ${s.country}`}</ListItem.Subtitle>
           </ListItem.Content>
-          {sentRequests.includes(s.id) ? (
+          {sentRequests.length !== 0 && sentRequests.includes(s.id) ? (
             <TouchableOpacity
               onPress={() => handleCancelRequest(userData.id, s.id)}
             >

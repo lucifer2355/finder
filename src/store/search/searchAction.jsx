@@ -27,8 +27,7 @@ export const search =
               searchResult.push(data);
             }
           });
-        })
-        .then((searchResult) => console.log(searchResult));
+        });
 
       dispatch({ type: SEARCH_COMPLETE, payload: searchResult });
     } catch (error) {

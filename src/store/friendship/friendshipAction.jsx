@@ -40,14 +40,24 @@ export const deleteSentRequest =
         .collection("friendship")
         .doc(loginUserId)
         .collection("sentRequest")
-        .doc(deleteRequestId)
-        .delete();
+        .get()
+        .then((querySnapshot) => {
+          querySnapshot.forEach((snapshot) => {
+            const data = snapshot.data();
+            if (data.userId === deleteRequestId) snapshot.ref.delete();
+          });
+        });
       await db
         .collection("friendship")
         .doc(deleteRequestId)
         .collection("receiveRequest")
-        .doc(loginUserId)
-        .delete();
+        .get()
+        .then((querySnapshot) => {
+          querySnapshot.forEach((snapshot) => {
+            const data = snapshot.data();
+            if (data.userId === loginUserId) snapshot.ref.delete();
+          });
+        });
       dispatch({ type: DELETE_SENT_REQUEST, payload: deleteRequestId });
     } catch (error) {
       console.log("Error in delete request", error);
@@ -109,10 +119,10 @@ export const getSentRequests = (loginUserId) => async (dispatch) => {
       .then((querySnapshot) => {
         querySnapshot.forEach((snapshot) => {
           const data = snapshot.data();
+          console.log("data", data.userId);
           sentRequests.push(data.userId);
         });
-      })
-      .then((sentRequests) => console.log("hello", sentRequests));
+      });
 
     dispatch({ type: GET_SENT_REQUESTS, payload: sentRequests });
   } catch (error) {
