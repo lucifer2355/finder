@@ -19,7 +19,7 @@ export const friendshipReducer = (state = initialState, action) => {
     case SENT_REQUEST:
       return {
         ...state,
-        sentRequests: state.sentRequests.push(action.payload),
+        sentRequests: state.sentRequests.concat(action.payload),
       };
 
     case DELETE_SENT_REQUEST:

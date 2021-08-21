@@ -44,7 +44,10 @@ export const deleteSentRequest =
         .then((querySnapshot) => {
           querySnapshot.forEach((snapshot) => {
             const data = snapshot.data();
-            if (data.userId === deleteRequestId) snapshot.ref.delete();
+            if (data.userId === deleteRequestId) {
+              snapshot.ref.delete();
+              return;
+            }
           });
         });
       await db
@@ -55,7 +58,10 @@ export const deleteSentRequest =
         .then((querySnapshot) => {
           querySnapshot.forEach((snapshot) => {
             const data = snapshot.data();
-            if (data.userId === loginUserId) snapshot.ref.delete();
+            if (data.userId === loginUserId) {
+              snapshot.ref.delete();
+              return;
+            }
           });
         });
       dispatch({ type: DELETE_SENT_REQUEST, payload: deleteRequestId });
@@ -119,7 +125,6 @@ export const getSentRequests = (loginUserId) => async (dispatch) => {
       .then((querySnapshot) => {
         querySnapshot.forEach((snapshot) => {
           const data = snapshot.data();
-          console.log("data", data.userId);
           sentRequests.push(data.userId);
         });
       });
