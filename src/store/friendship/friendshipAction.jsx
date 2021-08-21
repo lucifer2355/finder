@@ -134,3 +134,28 @@ export const getSentRequests = (loginUserId) => async (dispatch) => {
     console.log("Error in getSetRequests", error);
   }
 };
+
+export const getReceivedRequests = (loginUserId) => async (dispatch) => {
+  try {
+    const receivedRequests = [];
+    await db
+      .collection("friendship")
+      .doc(loginUserId)
+      .collection("receiveRequest")
+      .get()
+      .then((querySnapshot) => {
+        querySnapshot.forEach((snapshot) => {
+          const data = snapshot.data();
+          console.log("data", data);
+          db.collection("users")
+            .doc(data.userId)
+            .get()
+            .then((res) => receivedRequests.push(res.data()));
+        });
+      });
+
+    dispatch({ type: GET_RECEIVE_REQUESTS, payload: receivedRequests });
+  } catch (error) {
+    console.log("Error in get received requests list");
+  }
+};
