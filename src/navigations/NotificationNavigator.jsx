@@ -4,6 +4,7 @@ import { createMaterialTopTabNavigator } from "@react-navigation/material-top-ta
 
 import { colors } from "../config/colors";
 import NotificationScreen from "../screens/NotificationScreen";
+import RequestsScreen from "../screens/RequestsScreen";
 
 const Stack = createNativeStackNavigator();
 const Tab = createMaterialTopTabNavigator();
@@ -15,8 +16,16 @@ const TabNavigator = () => (
       tabBarIndicatorStyle: { backgroundColor: colors.primary },
     }}
   >
-    <Tab.Screen name='Home' component={NotificationScreen} />
-    <Tab.Screen name='Settings' component={NotificationScreen} />
+    <Tab.Screen
+      name='NotificationTab'
+      component={NotificationScreen}
+      options={{ title: "Notification" }}
+    />
+    <Tab.Screen
+      name='RequestsTab'
+      component={RequestsScreen}
+      options={{ title: "Requests" }}
+    />
   </Tab.Navigator>
 );
 
