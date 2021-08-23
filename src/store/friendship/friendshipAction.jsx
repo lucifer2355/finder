@@ -188,3 +188,25 @@ export const getReceivedRequests = (loginUserId) => async (dispatch) => {
     console.log("Error in get received requests list");
   }
 };
+
+export const getFriends = (loginUserId) => async (dispatch) => {
+  try {
+    const friends = [];
+
+    await db
+      .collection("friendship")
+      .doc(loginUserId)
+      .collection("friends")
+      .get()
+      .then((querySnapshot) => {
+        querySnapshot.forEach((snapshot) => {
+          const data = snapshot.data();
+          friends.push(data);
+        });
+      });
+
+    dispatch({ type: GET_FRIENDS_LIST, payload: friends });
+  } catch (error) {
+    console.log("Error in get friends list", error);
+  }
+};
