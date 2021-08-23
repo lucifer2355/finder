@@ -96,25 +96,27 @@ export const deleteReceivedRequest =
   };
 
 export const acceptRequest =
-  (loginUserId, acceptRequestId) => async (dispatch) => {
+  (loginUserData, acceptRequestUserData) => async (dispatch) => {
     try {
       await db
         .collection("friendship")
-        .doc(loginUserId)
+        .doc(loginUserData.id)
         .collection("friends")
         .add({
-          userId: acceptRequestId,
+          acceptRequestUserData,
         });
       await db
         .collection("friendship")
-        .doc(acceptRequestId)
+        .doc(acceptRequestUserData.id)
         .collection("friends")
         .add({
-          userId: loginUserId,
+          loginUserData,
         });
-      dispatch(deleteReceivedRequest(loginUserId, acceptRequestId));
+      dispatch(
+        deleteReceivedRequest(loginUserData.id, acceptRequestUserData.id)
+      );
 
-      dispatch({ type: ACCEPT_REQUEST, payload: acceptRequestId });
+      dispatch({ type: ACCEPT_REQUEST, payload: acceptRequestUserData.id });
     } catch (error) {
       console.log("Error in accept friend request action", error);
     }

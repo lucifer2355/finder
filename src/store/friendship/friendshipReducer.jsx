@@ -31,13 +31,15 @@ export const friendshipReducer = (state = initialState, action) => {
     case DELETE_RECEIVED_REQUEST:
       return {
         ...state,
-        regenerate: state.receiveRequests.filter((id) => id !== action.payload),
+        receiveRequests: state.receiveRequests.filter(
+          (id) => id !== action.payload
+        ),
       };
 
     case ACCEPT_REQUEST:
       return {
         ...state,
-        friends: state.friends(action.payload),
+        friends: state.friends.concat(action.payload),
       };
 
     case GET_SENT_REQUESTS:

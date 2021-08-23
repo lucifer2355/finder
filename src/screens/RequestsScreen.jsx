@@ -26,8 +26,8 @@ const RequestsScreen = () => {
     await dispatch(deleteReceivedRequest(userData.id, id));
   };
 
-  const handleAcceptRequest = async (id) => {
-    await dispatch(acceptRequest(userData.id, id));
+  const handleAcceptRequest = async (data) => {
+    await dispatch(acceptRequest(userData, data));
   };
 
   useEffect(() => {
@@ -76,7 +76,7 @@ const RequestsScreen = () => {
               size={23}
               color={colors.primary}
               style={styles.icon}
-              onPress={() => handleAcceptRequest(r.id)}
+              onPress={() => handleAcceptRequest(r)}
             />
           </View>
         </ListItem>
