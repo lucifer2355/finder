@@ -32,7 +32,7 @@ export const friendshipReducer = (state = initialState, action) => {
       return {
         ...state,
         receiveRequests: state.receiveRequests.filter(
-          (id) => id !== action.payload
+          (data) => data.id !== action.payload
         ),
       };
 

@@ -103,16 +103,16 @@ export const acceptRequest =
         .doc(loginUserData.id)
         .collection("friends")
         .add({
-          acceptRequestUserData,
+          user: acceptRequestUserData,
         });
       await db
         .collection("friendship")
         .doc(acceptRequestUserData.id)
         .collection("friends")
         .add({
-          loginUserData,
+          user: loginUserData,
         });
-      dispatch(
+      await dispatch(
         deleteReceivedRequest(loginUserData.id, acceptRequestUserData.id)
       );
 
