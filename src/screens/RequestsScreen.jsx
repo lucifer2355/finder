@@ -2,6 +2,7 @@ import React, { useEffect } from "react";
 import { StyleSheet, Text, View } from "react-native";
 import { useSelector, useDispatch } from "react-redux";
 import { ListItem, Avatar } from "react-native-elements";
+import Entypo from "react-native-vector-icons/Entypo";
 import AntDesign from "react-native-vector-icons/AntDesign";
 import SvgUri from "react-native-svg-uri";
 
@@ -12,8 +13,6 @@ const RequestsScreen = () => {
   const dispatch = useDispatch();
   const { userData } = useSelector((state) => state.authReducer);
   const { receiveRequests } = useSelector((state) => state.friendshipReducer);
-
-  console.log("screen REse", receiveRequests);
 
   const fetchReceiveRequests = async () => {
     await dispatch(getReceivedRequests(userData.id));
@@ -51,12 +50,23 @@ const RequestsScreen = () => {
             <ListItem.Subtitle>{`${r.age} Years, ${r.city}, ${r.state}, ${r.country}`}</ListItem.Subtitle>
           </ListItem.Content>
 
-          <AntDesign
-            name='pluscircleo'
-            size={28}
-            color={colors.primary}
-            onPress={() => console.log("hllo")}
-          />
+          <View style={styles.buttonContainer}>
+            <Entypo
+              name='circle-with-cross'
+              size={26}
+              color={colors.primary}
+              style={styles.icon}
+              onPress={() => console.log("hllo")}
+            />
+
+            <AntDesign
+              name='checkcircle'
+              size={23}
+              color={colors.primary}
+              style={styles.icon}
+              onPress={() => console.log("hllo")}
+            />
+          </View>
         </ListItem>
       ))}
     </View>
@@ -66,6 +76,15 @@ const RequestsScreen = () => {
 const styles = StyleSheet.create({
   screen: {
     flex: 1,
+  },
+
+  buttonContainer: {
+    flexDirection: "row",
+    alignItems: "center",
+  },
+
+  icon: {
+    marginHorizontal: 2,
   },
 });
 
