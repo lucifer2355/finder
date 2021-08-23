@@ -11,6 +11,7 @@ const NoData = ({ length }) => {
       />
     );
   }
+  return null;
 };
 
 export default NoData;
