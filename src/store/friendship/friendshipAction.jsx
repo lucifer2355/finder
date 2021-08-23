@@ -40,28 +40,22 @@ export const deleteSentRequest =
         .collection("friendship")
         .doc(loginUserId)
         .collection("sentRequest")
+        .where("userId", "==", deleteRequestId)
         .get()
         .then((querySnapshot) => {
           querySnapshot.forEach((snapshot) => {
-            const data = snapshot.data();
-            if (data.userId === deleteRequestId) {
-              snapshot.ref.delete();
-              return;
-            }
+            snapshot.ref.delete();
           });
         });
       await db
         .collection("friendship")
         .doc(deleteRequestId)
         .collection("receiveRequest")
+        .where("userId", "==", loginUserId)
         .get()
         .then((querySnapshot) => {
           querySnapshot.forEach((snapshot) => {
-            const data = snapshot.data();
-            if (data.userId === loginUserId) {
-              snapshot.ref.delete();
-              return;
-            }
+            snapshot.ref.delete();
           });
         });
       dispatch({ type: DELETE_SENT_REQUEST, payload: deleteRequestId });
@@ -77,14 +71,24 @@ export const deleteReceivedRequest =
         .collection("friendship")
         .doc(loginUserId)
         .collection("receiveRequest")
-        .doc(deleteRequestId)
-        .delete();
+        .where("userId", "==", deleteRequestId)
+        .get()
+        .then((querySnapshot) => {
+          querySnapshot.forEach((snapshot) => {
+            snapshot.ref.delete();
+          });
+        });
       await db
         .collection("friendship")
         .doc(deleteRequestId)
         .collection("sentRequest")
-        .doc(loginUserId)
-        .delete();
+        .where("userId", "==", loginUserId)
+        .get()
+        .then((querySnapshot) => {
+          querySnapshot.forEach((snapshot) => {
+            snapshot.ref.delete();
+          });
+        });
       dispatch({ type: DELETE_RECEIVED_REQUEST, payload: deleteRequestId });
     } catch (error) {
       console.log("Error in delete request", error);
@@ -99,7 +103,7 @@ export const acceptRequest =
         .doc(loginUserId)
         .collection("friends")
         .add({
-          userId: acceptRequest,
+          userId: acceptRequestId,
         });
       await db
         .collection("friendship")
@@ -108,10 +112,12 @@ export const acceptRequest =
         .add({
           userId: loginUserId,
         });
-      dispatch(deleteRequest(loginUserId, acceptRequestId));
+      dispatch(deleteReceivedRequest(loginUserId, acceptRequestId));
 
       dispatch({ type: ACCEPT_REQUEST, payload: acceptRequestId });
-    } catch (error) {}
+    } catch (error) {
+      console.log("Error in accept friend request action", error);
+    }
   };
 
 export const getSentRequests = (loginUserId) => async (dispatch) => {

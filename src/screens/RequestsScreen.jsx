@@ -7,7 +7,11 @@ import AntDesign from "react-native-vector-icons/AntDesign";
 import SvgUri from "react-native-svg-uri";
 
 import { colors } from "../config/colors";
-import { getReceivedRequests } from "../store/friendship/friendshipAction";
+import {
+  getReceivedRequests,
+  deleteReceivedRequest,
+  acceptRequest,
+} from "../store/friendship/friendshipAction";
 
 const RequestsScreen = () => {
   const dispatch = useDispatch();
@@ -16,6 +20,14 @@ const RequestsScreen = () => {
 
   const fetchReceiveRequests = async () => {
     await dispatch(getReceivedRequests(userData.id));
+  };
+
+  const handleDeleteRequest = async (id) => {
+    await dispatch(deleteReceivedRequest(userData.id, id));
+  };
+
+  const handleAcceptRequest = async (id) => {
+    await dispatch(acceptRequest(userData.id, id));
   };
 
   useEffect(() => {
@@ -56,7 +68,7 @@ const RequestsScreen = () => {
               size={26}
               color={colors.primary}
               style={styles.icon}
-              onPress={() => console.log("hllo")}
+              onPress={() => handleDeleteRequest(r.id)}
             />
 
             <AntDesign
@@ -64,7 +76,7 @@ const RequestsScreen = () => {
               size={23}
               color={colors.primary}
               style={styles.icon}
-              onPress={() => console.log("hllo")}
+              onPress={() => handleAcceptRequest(r.id)}
             />
           </View>
         </ListItem>
