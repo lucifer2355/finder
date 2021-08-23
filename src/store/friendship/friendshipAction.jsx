@@ -135,24 +135,44 @@ export const getSentRequests = (loginUserId) => async (dispatch) => {
   }
 };
 
+const getReceivedRequestsUserId = async (loginUserId) => {
+  const result = [];
+
+  await db
+    .collection("friendship")
+    .doc(loginUserId)
+    .collection("receiveRequest")
+    .get()
+    .then((querySnapshot) => {
+      querySnapshot.forEach((snapshot) => {
+        const data = snapshot.data();
+        result.push(data.userId);
+      });
+    });
+
+  return result;
+};
+
 export const getReceivedRequests = (loginUserId) => async (dispatch) => {
   try {
     const receivedRequests = [];
-    await db
-      .collection("friendship")
-      .doc(loginUserId)
-      .collection("receiveRequest")
-      .get()
-      .then((querySnapshot) => {
-        querySnapshot.forEach((snapshot) => {
-          const data = snapshot.data();
-          console.log("data", data);
-          db.collection("users")
-            .doc(data.userId)
-            .get()
-            .then((res) => receivedRequests.push(res.data()));
-        });
+
+    const userIds = await getReceivedRequestsUserId(loginUserId);
+
+    if (userIds.length > 0) {
+      userIds.map(async (id) => {
+        db.collection("users")
+          .doc(id)
+          .get()
+          .then((snapshot) => {
+            const data = snapshot.data();
+            receivedRequests.push(...[data]);
+          })
+          .catch((err) => {
+            console.log("Error getting documents", err);
+          });
       });
+    }
 
     dispatch({ type: GET_RECEIVE_REQUESTS, payload: receivedRequests });
   } catch (error) {

@@ -20,18 +20,17 @@ export const login = (username, password) => async (dispatch) => {
   try {
     await db
       .collection("users")
+      .where("username", "==", username)
+      .where("password", "==", password)
       .get()
       .then((querySnapshot) => {
         querySnapshot.forEach((snapshot) => {
           const data = snapshot.data();
           const id = snapshot.id;
+          data.id = id;
 
-          if (data.username === username && data.password === password) {
-            data.id = id;
-            setItem("userData", data);
-            dispatch({ type: LOGIN_COMPLETE, payload: data });
-            return;
-          }
+          setItem("userData", data);
+          dispatch({ type: LOGIN_COMPLETE, payload: data });
         });
       });
   } catch (error) {

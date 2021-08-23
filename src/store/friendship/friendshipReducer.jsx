@@ -46,6 +46,12 @@ export const friendshipReducer = (state = initialState, action) => {
         sentRequests: action.payload,
       };
 
+    case GET_RECEIVE_REQUESTS:
+      return {
+        ...state,
+        receiveRequests: action.payload,
+      };
+
     default:
       return state;
   }
