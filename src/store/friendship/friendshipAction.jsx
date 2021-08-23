@@ -166,15 +166,16 @@ export const getReceivedRequests = (loginUserId) => async (dispatch) => {
           .get()
           .then((snapshot) => {
             const data = snapshot.data();
-            receivedRequests.push(...[data]);
+            data.id = snapshot.id;
+            receivedRequests.push(data);
+
+            dispatch({ type: GET_RECEIVE_REQUESTS, payload: receivedRequests });
           })
           .catch((err) => {
             console.log("Error getting documents", err);
           });
       });
     }
-
-    dispatch({ type: GET_RECEIVE_REQUESTS, payload: receivedRequests });
   } catch (error) {
     console.log("Error in get received requests list");
   }
