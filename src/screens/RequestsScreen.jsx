@@ -1,10 +1,9 @@
 import React, { useEffect } from "react";
-import { StyleSheet, Text, View } from "react-native";
+import { StyleSheet, View } from "react-native";
 import { useSelector, useDispatch } from "react-redux";
 import { ListItem, Avatar } from "react-native-elements";
 import Entypo from "react-native-vector-icons/Entypo";
 import AntDesign from "react-native-vector-icons/AntDesign";
-import SvgUri from "react-native-svg-uri";
 
 import { colors } from "../config/colors";
 import {
@@ -12,6 +11,7 @@ import {
   deleteReceivedRequest,
   acceptRequest,
 } from "../store/friendship/friendshipAction";
+import NoData from "../components/NoData";
 
 const RequestsScreen = () => {
   const dispatch = useDispatch();
@@ -34,18 +34,9 @@ const RequestsScreen = () => {
     fetchReceiveRequests();
   }, []);
 
-  if (receiveRequests.length === 0) {
-    return (
-      <SvgUri
-        width='100%'
-        height='100%'
-        source={require("../../assets/svg/noData.svg")}
-      />
-    );
-  }
-
   return (
     <View style={styles.screen}>
+      <NoData length={receiveRequests.length} />
       {receiveRequests.map((r) => (
         <ListItem key={r.id} bottomDivider>
           <Avatar

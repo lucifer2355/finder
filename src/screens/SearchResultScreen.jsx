@@ -1,7 +1,6 @@
 import React, { useEffect } from "react";
 import { StyleSheet, View, Text, TouchableOpacity } from "react-native";
 import { useSelector, useDispatch } from "react-redux";
-import SvgUri from "react-native-svg-uri";
 import { ListItem, Avatar } from "react-native-elements";
 import AntDesign from "react-native-vector-icons/AntDesign";
 
@@ -11,22 +10,13 @@ import {
   sentRequest,
   deleteSentRequest,
 } from "../store/friendship/friendshipAction";
+import NoData from "../components/NoData";
 
 const SearchResultScreen = () => {
   const dispatch = useDispatch();
   const { searchResult } = useSelector((state) => state.searchReducer);
   const { userData } = useSelector((state) => state.authReducer);
   const { sentRequests } = useSelector((state) => state.friendshipReducer);
-
-  if (searchResult.length === 0) {
-    return (
-      <SvgUri
-        width='100%'
-        height='100%'
-        source={require("../../assets/svg/noData.svg")}
-      />
-    );
-  }
 
   const fetchSentRequests = async () => {
     await dispatch(getSentRequests(userData.id));
@@ -46,6 +36,7 @@ const SearchResultScreen = () => {
 
   return (
     <View>
+      <NoData length={searchResult.length} />
       {searchResult.map((s) => (
         <ListItem key={s.id} bottomDivider>
           <Avatar
