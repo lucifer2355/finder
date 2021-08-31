@@ -1,10 +1,12 @@
 import React from "react";
-import { StyleSheet, Text, View } from "react-native";
+import { StyleSheet, Text, View, TextInput } from "react-native";
 
 const ChatScreen = () => {
   return (
     <View style={styles.screen}>
-      <Text>Chat Screen</Text>
+      <View style={styles.chatInput}>
+        <TextInput placeholder='Type a message' />
+      </View>
     </View>
   );
 };

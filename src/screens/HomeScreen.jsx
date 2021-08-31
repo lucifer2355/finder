@@ -7,7 +7,7 @@ import { colors } from "../config/colors";
 import NoData from "../components/NoData";
 import { getFriends } from "../store/friendship/friendshipAction";
 
-const HomeScreen = () => {
+const HomeScreen = ({ navigation }) => {
   const dispatch = useDispatch();
   const { friends } = useSelector((state) => state.friendshipReducer);
   const { userData } = useSelector((state) => state.authReducer);
