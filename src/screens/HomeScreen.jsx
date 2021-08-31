@@ -25,7 +25,11 @@ const HomeScreen = ({ navigation }) => {
       <NoData length={friends.length} />
 
       {friends.map(({ user }) => (
-        <ListItem key={user.id} bottomDivider>
+        <ListItem
+          key={user.id}
+          onPress={() => navigation.navigate("Chat")}
+          bottomDivider
+        >
           <Avatar
             rounded
             size={50}
