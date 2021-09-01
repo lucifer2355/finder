@@ -11,6 +11,7 @@ import { KeyboardAwareScrollView } from "react-native-keyboard-aware-scroll-view
 import { colors } from "../config/colors";
 import { hp, wp } from "../config/HeightWidth";
 import Icons from "../config/Icons";
+import AppTextInput from "../components/AppTextInput";
 
 const ChatScreen = ({ navigation }) => {
   const sendMessage = () => {
@@ -23,12 +24,13 @@ const ChatScreen = ({ navigation }) => {
     <KeyboardAwareScrollView
       keyboardDismissMode='on-drag'
       contentContainerStyle={styles.screen}
-      extraScrollHeight={10}
+      extraScrollHeight={20}
+      keyboardOpeningTime={100}
     >
       <View style={styles.chat}></View>
-      <View style={styles.textInputView}>
-        <View style={{ justifyContent: "space-between", flexDirection: "row" }}>
-          <TextInput placeholder='Type a message' style={styles.textInput} />
+      <View style={styles.bottomView}>
+        <View style={styles.textInputView}>
+          <AppTextInput placeholder='Type a message' width='84%' />
           <TouchableOpacity onPress={sendMessage} style={styles.sendButton}>
             {Icons.materialCommunityIcons("send", 30)}
           </TouchableOpacity>
@@ -47,25 +49,27 @@ const styles = StyleSheet.create({
     flex: 0.9,
   },
 
-  textInputView: {
+  bottomView: {
     flex: 0.1,
     justifyContent: "flex-end",
     paddingHorizontal: 5,
-    marginBottom: 10,
+    marginBottom: 5,
+  },
+
+  textInputView: {
+    justifyContent: "space-between",
+    alignItems: "center",
+    flexDirection: "row",
   },
 
   textInput: {
-    borderWidth: 1,
-    borderRadius: 20,
-    paddingHorizontal: 10,
     fontSize: 18,
-    width: wp("82%"),
   },
 
   sendButton: {
     backgroundColor: colors.primary,
-    height: 60,
-    width: 60,
+    height: 50,
+    width: 50,
     borderRadius: 30,
     justifyContent: "center",
     alignItems: "center",
