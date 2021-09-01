@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import { StyleSheet, Text, View } from "react-native";
 import { useSelector, useDispatch } from "react-redux";
 import { ListItem, Avatar } from "react-native-elements";
@@ -6,19 +6,25 @@ import { ListItem, Avatar } from "react-native-elements";
 import { colors } from "../config/colors";
 import NoData from "../components/NoData";
 import { getFriends } from "../store/friendship/friendshipAction";
+import AppLoader from "../components/AppLoader";
 
 const HomeScreen = ({ navigation }) => {
   const dispatch = useDispatch();
   const { friends } = useSelector((state) => state.friendshipReducer);
   const { userData } = useSelector((state) => state.authReducer);
+  const [isLoading, setIsLoading] = useState(false);
 
   const fetchFriendsList = async () => {
+    setIsLoading(true);
     await dispatch(getFriends(userData.id));
+    setIsLoading(false);
   };
 
   useEffect(() => {
     fetchFriendsList();
   }, []);
+
+  if (isLoading) return <AppLoader />;
 
   return (
     <View style={styles.screen}>
