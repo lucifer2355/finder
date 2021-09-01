@@ -6,6 +6,7 @@ import {
   TextInput,
   TouchableOpacity,
 } from "react-native";
+import { KeyboardAwareScrollView } from "react-native-keyboard-aware-scroll-view";
 
 import { colors } from "../config/colors";
 import { hp, wp } from "../config/HeightWidth";
@@ -19,7 +20,11 @@ const ChatScreen = ({ navigation }) => {
   useLayoutEffect(() => {}, []);
 
   return (
-    <View style={styles.screen}>
+    <KeyboardAwareScrollView
+      keyboardDismissMode='on-drag'
+      contentContainerStyle={styles.screen}
+      extraScrollHeight={10}
+    >
       <View style={styles.chat}></View>
       <View style={styles.textInputView}>
         <View style={{ justifyContent: "space-between", flexDirection: "row" }}>
@@ -29,7 +34,7 @@ const ChatScreen = ({ navigation }) => {
           </TouchableOpacity>
         </View>
       </View>
-    </View>
+    </KeyboardAwareScrollView>
   );
 };
 
