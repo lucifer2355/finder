@@ -27,7 +27,7 @@ const HomeScreen = ({ navigation }) => {
       {friends.map(({ user }) => (
         <ListItem
           key={user.id}
-          onPress={() => navigation.navigate("Chat")}
+          onPress={() => navigation.navigate("Chat", { name: user.fullName })}
           bottomDivider
         >
           <Avatar

@@ -13,12 +13,16 @@ import { hp, wp } from "../config/HeightWidth";
 import Icons from "../config/Icons";
 import AppTextInput from "../components/AppTextInput";
 
-const ChatScreen = ({ navigation }) => {
+const ChatScreen = ({ navigation, route }) => {
   const sendMessage = () => {
     console.log("send message");
   };
 
-  useLayoutEffect(() => {}, []);
+  useLayoutEffect(() => {
+    navigation.setOptions({
+      title: route.params.name,
+    });
+  }, []);
 
   return (
     <KeyboardAwareScrollView
