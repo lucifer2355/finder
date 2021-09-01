@@ -7,6 +7,7 @@ import {
   TouchableOpacity,
 } from "react-native";
 import { KeyboardAwareScrollView } from "react-native-keyboard-aware-scroll-view";
+import Ionicons from "react-native-vector-icons/Ionicons";
 
 import { colors } from "../config/colors";
 import { hp, wp } from "../config/HeightWidth";
@@ -21,6 +22,22 @@ const ChatScreen = ({ navigation, route }) => {
   useLayoutEffect(() => {
     navigation.setOptions({
       title: route.params.name,
+      headerRight: () => (
+        <View style={styles.headerButtons}>
+          <Ionicons
+            name='call'
+            size={24}
+            color={colors.white}
+            onPress={() => console.log("call")}
+          />
+          <Ionicons
+            name='videocam'
+            size={24}
+            color={colors.white}
+            onPress={() => console.log("video call")}
+          />
+        </View>
+      ),
     });
   }, []);
 
@@ -47,6 +64,12 @@ const ChatScreen = ({ navigation, route }) => {
 const styles = StyleSheet.create({
   screen: {
     flex: 1,
+  },
+
+  headerButtons: {
+    width: wp("17%"),
+    flexDirection: "row",
+    justifyContent: "space-between",
   },
 
   chat: {
