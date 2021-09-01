@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useLayoutEffect } from "react";
 import {
   StyleSheet,
   Text,
@@ -6,16 +6,17 @@ import {
   TextInput,
   TouchableOpacity,
 } from "react-native";
-import MaterialCommunityIcons from "react-native-vector-icons/MaterialCommunityIcons";
 
 import { colors } from "../config/colors";
 import { hp, wp } from "../config/HeightWidth";
 import Icons from "../config/Icons";
 
-const ChatScreen = () => {
+const ChatScreen = ({ navigation }) => {
   const sendMessage = () => {
     console.log("send message");
   };
+
+  useLayoutEffect(() => {}, []);
 
   return (
     <View style={styles.screen}>
