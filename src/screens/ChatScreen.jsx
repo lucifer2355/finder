@@ -1,7 +1,8 @@
 import React, { useLayoutEffect, useEffect, useState } from "react";
 import { StyleSheet, Text, View, TouchableOpacity } from "react-native";
-import { KeyboardAwareScrollView } from "react-native-keyboard-aware-scroll-view";
+import { useSelector } from "react-redux";
 import { useCollection } from "react-firebase-hooks/firestore";
+import { KeyboardAwareScrollView } from "react-native-keyboard-aware-scroll-view";
 import Ionicons from "react-native-vector-icons/Ionicons";
 
 import { colors } from "../config/colors";
@@ -11,14 +12,23 @@ import Icons from "../config/Icons";
 import AppTextInput from "../components/AppTextInput";
 
 const ChatScreen = ({ navigation, route }) => {
-  const [recipientId, setRecipientId] = useState();
+  const { userData } = useSelector((state) => state.authReducer);
+  const [recipientId, setRecipientId] = useState(route.params.recipientId);
+  const [friendshipId, setFriendshipId] = useState(route.params.friendshipId);
 
   const sendMessage = () => {
     console.log("send message", recipientId);
   };
 
   useEffect(() => {
-    // db.collection('chats').doc()
+    // (async () => {
+    //   await db
+    //     .collection("chats")
+    //     .doc(route.params.friendshipId)
+    //     .set({
+    //       users: [userData.id, recipientId],
+    //     });
+    // })();
   }, []);
 
   useLayoutEffect(() => {
@@ -41,8 +51,6 @@ const ChatScreen = ({ navigation, route }) => {
         </View>
       ),
     });
-
-    setRecipientId(route.params.recipientId);
   }, []);
 
   return (

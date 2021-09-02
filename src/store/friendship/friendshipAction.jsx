@@ -201,7 +201,7 @@ export const getFriends = (loginUserId) => async (dispatch) => {
       .then((querySnapshot) => {
         querySnapshot.forEach((snapshot) => {
           const data = snapshot.data();
-          data.friendshipId = snapshot.id;
+          data.user.friendshipId = snapshot.id;
           friends.push(data);
         });
       });
