@@ -55,8 +55,10 @@ const ChatScreen = ({ navigation, route }) => {
             ...chatRes.data(),
           };
 
+          console.log("msg", messages);
+
           setChat(chat);
-          setMessages(JSON.stringify(messages));
+          setMessages(messages);
         } else {
           await chatRef.set({
             users: [userData.id, recipientId],
@@ -96,11 +98,7 @@ const ChatScreen = ({ navigation, route }) => {
       keyboardOpeningTime={100}
     >
       <View style={styles.chat}>
-        <DisplayChats
-          chat={chat}
-          messages={messages}
-          friendshipId={friendshipId}
-        />
+        <DisplayChats chat={chat} messages={messages} />
       </View>
       <View style={styles.bottomView}>
         <View style={styles.textInputView}>
