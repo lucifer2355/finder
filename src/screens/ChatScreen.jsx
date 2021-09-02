@@ -1,27 +1,29 @@
-import React, { useLayoutEffect } from "react";
-import {
-  StyleSheet,
-  Text,
-  View,
-  TextInput,
-  TouchableOpacity,
-} from "react-native";
+import React, { useLayoutEffect, useEffect, useState } from "react";
+import { StyleSheet, Text, View, TouchableOpacity } from "react-native";
 import { KeyboardAwareScrollView } from "react-native-keyboard-aware-scroll-view";
+import { useCollection } from "react-firebase-hooks/firestore";
 import Ionicons from "react-native-vector-icons/Ionicons";
 
 import { colors } from "../config/colors";
 import { hp, wp } from "../config/HeightWidth";
+import { db } from "../firebase";
 import Icons from "../config/Icons";
 import AppTextInput from "../components/AppTextInput";
 
 const ChatScreen = ({ navigation, route }) => {
+  const [recipientId, setRecipientId] = useState();
+
   const sendMessage = () => {
-    console.log("send message");
+    console.log("send message", recipientId);
   };
+
+  useEffect(() => {
+    // db.collection('chats').doc()
+  }, []);
 
   useLayoutEffect(() => {
     navigation.setOptions({
-      title: route.params.name,
+      title: route.params.recipientFullName,
       headerRight: () => (
         <View style={styles.headerButtons}>
           <Ionicons
@@ -39,6 +41,8 @@ const ChatScreen = ({ navigation, route }) => {
         </View>
       ),
     });
+
+    setRecipientId(route.params.recipientId);
   }, []);
 
   return (
@@ -53,7 +57,7 @@ const ChatScreen = ({ navigation, route }) => {
         <View style={styles.textInputView}>
           <AppTextInput placeholder='Type a message' width='84%' />
           <TouchableOpacity onPress={sendMessage} style={styles.sendButton}>
-            {Icons.materialCommunityIcons("send", 30)}
+            {Icons.materialCommunityIcons("send", 28)}
           </TouchableOpacity>
         </View>
       </View>

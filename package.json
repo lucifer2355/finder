@@ -20,6 +20,7 @@
     "firebase": "^8.9.0",
     "formik": "^2.2.9",
     "react": "17.0.1",
+    "react-firebase-hooks": "^3.0.4",
     "react-native": "0.64.2",
     "react-native-dropdown-picker": "^5.1.23",
     "react-native-elements": "^3.4.2",
