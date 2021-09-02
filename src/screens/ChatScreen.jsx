@@ -21,14 +21,18 @@ const ChatScreen = ({ navigation, route }) => {
   };
 
   useEffect(() => {
-    // (async () => {
-    //   await db
-    //     .collection("chats")
-    //     .doc(route.params.friendshipId)
-    //     .set({
-    //       users: [userData.id, recipientId],
-    //     });
-    // })();
+    (() => {
+      const chatRef = db.collection("chats").doc(friendshipId);
+      chatRef.get().then(async (docSnapshot) => {
+        if (docSnapshot.exists) {
+          console.log("exist");
+        } else {
+          await chatRef.set({
+            users: [userData.id, recipientId],
+          });
+        }
+      });
+    })();
   }, []);
 
   useLayoutEffect(() => {
