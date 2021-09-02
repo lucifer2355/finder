@@ -1,7 +1,6 @@
 import React, { useLayoutEffect, useEffect, useState } from "react";
 import { StyleSheet, Text, View, TouchableOpacity } from "react-native";
 import { useSelector } from "react-redux";
-import { useCollection } from "react-firebase-hooks/firestore";
 import { KeyboardAwareScrollView } from "react-native-keyboard-aware-scroll-view";
 import Ionicons from "react-native-vector-icons/Ionicons";
 
@@ -10,17 +9,17 @@ import { hp, wp } from "../config/HeightWidth";
 import { db } from "../firebase";
 import Icons from "../config/Icons";
 import AppTextInput from "../components/AppTextInput";
+import DisplayChats from "../components/DisplayChats";
 
 const ChatScreen = ({ navigation, route }) => {
   const { userData } = useSelector((state) => state.authReducer);
   const [recipientId, setRecipientId] = useState(route.params.recipientId);
   const [friendshipId, setFriendshipId] = useState(route.params.friendshipId);
+  const [messageText, setMessageText] = useState("");
   const [chat, setChat] = useState();
   const [messages, setMessages] = useState();
 
-  const sendMessage = () => {
-    console.log("send message", recipientId);
-  };
+  const sendMessage = () => {};
 
   useEffect(() => {
     (() => {
@@ -87,11 +86,30 @@ const ChatScreen = ({ navigation, route }) => {
       extraScrollHeight={20}
       keyboardOpeningTime={100}
     >
-      <View style={styles.chat}></View>
+      <View style={styles.chat}>
+        <DisplayChats
+          chat={chat}
+          messages={messages}
+          friendshipId={friendshipId}
+        />
+      </View>
       <View style={styles.bottomView}>
         <View style={styles.textInputView}>
-          <AppTextInput placeholder='Type a message' width='84%' />
-          <TouchableOpacity onPress={sendMessage} style={styles.sendButton}>
+          <AppTextInput
+            value={messageText}
+            onChangeText={(text) => setMessageText(text)}
+            placeholder='Type a message'
+            width='84%'
+          />
+          <TouchableOpacity
+            onPress={sendMessage}
+            style={
+              !messageText
+                ? [styles.sendButton, { opacity: 0.6 }]
+                : styles.sendButton
+            }
+            disabled={!messageText}
+          >
             {Icons.materialCommunityIcons("send", 28)}
           </TouchableOpacity>
         </View>
