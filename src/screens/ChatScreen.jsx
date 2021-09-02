@@ -15,6 +15,8 @@ const ChatScreen = ({ navigation, route }) => {
   const { userData } = useSelector((state) => state.authReducer);
   const [recipientId, setRecipientId] = useState(route.params.recipientId);
   const [friendshipId, setFriendshipId] = useState(route.params.friendshipId);
+  const [chat, setChat] = useState();
+  const [messages, setMessages] = useState();
 
   const sendMessage = () => {
     console.log("send message", recipientId);
@@ -25,7 +27,28 @@ const ChatScreen = ({ navigation, route }) => {
       const chatRef = db.collection("chats").doc(friendshipId);
       chatRef.get().then(async (docSnapshot) => {
         if (docSnapshot.exists) {
-          console.log("exist");
+          const messagesRef = await chatRef
+            .collection("messages")
+            .orderBy("timestamp", "asc")
+            .get();
+          const messages = messagesRef.docs
+            .map((doc) => ({
+              id: doc.id,
+              ...doc.data(),
+            }))
+            .map((messages) => ({
+              ...messages,
+              timestamp: messages.timestamp.toDate().getTime(),
+            }));
+
+          const chatRes = await chatRef.get();
+          const chat = {
+            id: chatRes.id,
+            ...chatRes.data(),
+          };
+
+          setChat(chat);
+          setMessages(JSON.stringify(messages));
         } else {
           await chatRef.set({
             users: [userData.id, recipientId],
