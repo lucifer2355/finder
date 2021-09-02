@@ -2,6 +2,7 @@ import React, { useLayoutEffect, useEffect, useState } from "react";
 import { StyleSheet, Text, View, TouchableOpacity } from "react-native";
 import { useSelector } from "react-redux";
 import { KeyboardAwareScrollView } from "react-native-keyboard-aware-scroll-view";
+import firebase from "firebase";
 import Ionicons from "react-native-vector-icons/Ionicons";
 
 import { colors } from "../config/colors";
@@ -19,7 +20,15 @@ const ChatScreen = ({ navigation, route }) => {
   const [chat, setChat] = useState();
   const [messages, setMessages] = useState();
 
-  const sendMessage = () => {};
+  const sendMessage = async () => {
+    await db.collection("chats").doc(friendshipId).collection("messages").add({
+      message: messageText,
+      user: userData.id,
+      timestamp: firebase.firestore.FieldValue.serverTimestamp(),
+    });
+
+    setMessageText("");
+  };
 
   useEffect(() => {
     (() => {
