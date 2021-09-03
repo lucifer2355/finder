@@ -55,8 +55,6 @@ const ChatScreen = ({ navigation, route }) => {
             ...chatRes.data(),
           };
 
-          console.log("msg", messages);
-
           setChat(chat);
           setMessages(messages);
         } else {
@@ -98,7 +96,11 @@ const ChatScreen = ({ navigation, route }) => {
       keyboardOpeningTime={100}
     >
       <View style={styles.chat}>
-        <DisplayChats chat={chat} messages={messages} />
+        <DisplayChats
+          chat={chat}
+          messages={messages}
+          friendshipId={friendshipId}
+        />
       </View>
       <View style={styles.bottomView}>
         <View style={styles.textInputView}>
