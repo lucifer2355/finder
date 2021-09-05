@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, useRef } from "react";
 import { ScrollView, StyleSheet, Text, View } from "react-native";
 import { useCollection } from "react-firebase-hooks/firestore";
 
@@ -7,6 +7,7 @@ import Message from "./Message";
 import { hp } from "../config/HeightWidth";
 
 const DisplayChats = ({ chat, messages, friendshipId }) => {
+  const scrollViewRef = useRef();
   const [messagesSnapshot] = useCollection(
     db
       .collection("chats")
@@ -35,7 +36,17 @@ const DisplayChats = ({ chat, messages, friendshipId }) => {
     // }
   };
 
-  return <ScrollView style={styles.messagesView}>{showMessages()}</ScrollView>;
+  return (
+    <ScrollView
+      ref={scrollViewRef}
+      onContentSizeChange={() =>
+        scrollViewRef.current.scrollToEnd({ animated: true })
+      }
+      style={styles.messagesView}
+    >
+      {showMessages()}
+    </ScrollView>
+  );
 };
 
 const styles = StyleSheet.create({
