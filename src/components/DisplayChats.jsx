@@ -27,21 +27,12 @@ const DisplayChats = ({ chat, messages, friendshipId }) => {
         />
       ));
     }
+    // else {
+    //   return messages.map((message) => (
+    //     <Message key={message.id} user={message.user} message={message} />
+    //   ));
+    // }
   };
-  // const showMessages = () => {
-  //   if (messages) {
-  //     return messages.map((message) => (
-  //       <Message
-  //         key={message.id}
-  //         user={message.user}
-  //         message={{
-  //           messageText: message.message,
-  //           timeStamp: message.timestamp,
-  //         }}
-  //       />
-  //     ));
-  //   }
-  // };
 
   return <View>{showMessages()}</View>;
 };
