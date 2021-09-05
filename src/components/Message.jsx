@@ -43,7 +43,8 @@ const Message = ({ user, message }) => {
 
 const styles = StyleSheet.create({
   senderMsgView: {
-    width: wp("35%"),
+    maxWidth: wp("70%"),
+    minWidth: wp("35%"),
     borderWidth: 1,
     borderColor: "transparent",
     borderRadius: 20,

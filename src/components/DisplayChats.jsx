@@ -1,5 +1,5 @@
-import React, { useEffect, useState, useRef } from "react";
-import { ScrollView, StyleSheet, Text, View } from "react-native";
+import React, { useRef } from "react";
+import { ScrollView, StyleSheet } from "react-native";
 import { useCollection } from "react-firebase-hooks/firestore";
 
 import { db } from "../firebase";
@@ -38,6 +38,7 @@ const DisplayChats = ({ chat, messages, friendshipId }) => {
 
   return (
     <ScrollView
+      showsVerticalScrollIndicator={false}
       ref={scrollViewRef}
       onContentSizeChange={() =>
         scrollViewRef.current.scrollToEnd({ animated: true })
