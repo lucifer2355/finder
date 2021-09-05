@@ -1,9 +1,10 @@
 import React, { useEffect, useState } from "react";
-import { StyleSheet, Text, View } from "react-native";
+import { ScrollView, StyleSheet, Text, View } from "react-native";
 import { useCollection } from "react-firebase-hooks/firestore";
 
 import { db } from "../firebase";
 import Message from "./Message";
+import { hp } from "../config/HeightWidth";
 
 const DisplayChats = ({ chat, messages, friendshipId }) => {
   const [messagesSnapshot] = useCollection(
@@ -34,9 +35,13 @@ const DisplayChats = ({ chat, messages, friendshipId }) => {
     // }
   };
 
-  return <View>{showMessages()}</View>;
+  return <ScrollView style={styles.messagesView}>{showMessages()}</ScrollView>;
 };
 
-const styles = StyleSheet.create({});
+const styles = StyleSheet.create({
+  messagesView: {
+    paddingBottom: hp("10%"),
+  },
+});
 
 export default DisplayChats;

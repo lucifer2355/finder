@@ -13,9 +13,28 @@ const Message = ({ user, message }) => {
   const [isSender, setIsSender] = useState(id === message.user);
 
   return (
-    <View style={isSender ? styles.senderMsgView : styles.receiverMsgView}>
-      <Text style={styles.msgText}>{message.message}</Text>
-      <Text style={styles.msgTime}>
+    <View
+      style={[
+        styles.senderMsgView,
+        isSender
+          ? { alignSelf: "flex-end", backgroundColor: colors.primary }
+          : { alignSelf: "flex-start", backgroundColor: colors.gray },
+      ]}
+    >
+      <Text
+        style={[
+          styles.msgText,
+          isSender ? { color: colors.black } : { color: colors.white },
+        ]}
+      >
+        {message.message}
+      </Text>
+      <Text
+        style={[
+          styles.msgTime,
+          isSender ? { color: colors.black } : { color: colors.white },
+        ]}
+      >
         {moment(message.timestamp).format("DD/MM, hA")}
       </Text>
     </View>
@@ -24,21 +43,18 @@ const Message = ({ user, message }) => {
 
 const styles = StyleSheet.create({
   senderMsgView: {
-    width: wp("40%"),
+    width: wp("35%"),
     borderWidth: 1,
     borderColor: "transparent",
     borderRadius: 20,
-    backgroundColor: colors.primary,
-    paddingVertical: 10,
+    paddingVertical: 8,
     paddingHorizontal: 15,
     marginVertical: 2,
-    alignSelf: "flex-end",
-    marginRight: 5,
+    marginHorizontal: 5,
   },
 
   msgText: {
     fontSize: 18,
-    color: colors.black,
     fontWeight: "600",
   },
 
